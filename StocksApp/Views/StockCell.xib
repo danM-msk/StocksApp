@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReusableCell" rowHeight="64" id="joH-3I-a06" customClass="StockCell" customModule="Stocks" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="joH-3I-a06" id="afA-1J-lWp">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="byR-o8-96n" userLabel="Right Info">
+                        <rect key="frame" x="294" y="13" width="100" height="38"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRICE $" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttf-IZ-MSb">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="f85-t3-Ftl"/>
+                                    <constraint firstAttribute="height" constant="17" id="vaR-L8-Gld"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change %" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1g-Jn-0ii">
+                                <rect key="frame" x="0.0" y="21" width="100" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="GA0-o8-Lr2"/>
+                                    <constraint firstAttribute="height" constant="17" id="hSi-cV-qLL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.1843137255" green="0.70588235290000001" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="DXd-VV-u8W" userLabel="Left Info">
+                        <rect key="frame" x="20" y="13" width="238" height="38"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TICKER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tnd-C5-neE">
+                                <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="238" id="EWw-ra-Nr6"/>
+                                    <constraint firstAttribute="height" constant="17" id="QTk-Uh-QyN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pzq-ut-c46">
+                                <rect key="frame" x="0.0" y="21" width="238" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="238" id="GLd-Op-0AP"/>
+                                    <constraint firstAttribute="height" constant="17" id="THf-ZN-qcg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.60784313729999995" green="0.60392156860000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="DXd-VV-u8W" firstAttribute="top" secondItem="afA-1J-lWp" secondAttribute="top" constant="13" id="3eE-cY-nMh"/>
+                    <constraint firstAttribute="trailing" secondItem="byR-o8-96n" secondAttribute="trailing" constant="20" id="5k5-Tg-Mnv"/>
+                    <constraint firstItem="DXd-VV-u8W" firstAttribute="leading" secondItem="afA-1J-lWp" secondAttribute="leading" constant="20" id="Bcc-6A-doR"/>
+                    <constraint firstItem="byR-o8-96n" firstAttribute="top" secondItem="afA-1J-lWp" secondAttribute="top" constant="13" id="zfV-n7-v3X"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="LCc-zf-66f"/>
+            <connections>
+                <outlet property="companyName" destination="Pzq-ut-c46" id="6co-JC-Y8V"/>
+                <outlet property="price" destination="Ttf-IZ-MSb" id="ImA-2D-9DL"/>
+                <outlet property="priceChange" destination="n1g-Jn-0ii" id="viW-s2-stY"/>
+                <outlet property="ticker" destination="Tnd-C5-neE" id="gup-VR-SUk"/>
+            </connections>
+            <point key="canvasLocation" x="202.89855072463769" y="87.723214285714278"/>
+        </tableViewCell>
+    </objects>
+</document>
