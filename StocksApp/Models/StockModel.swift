@@ -10,16 +10,21 @@ import Foundation
 class StockModel {
     static let instance = StockModel()
     
-    let stockManager = StockManager.instance
+    let stockManager = FHProvider.instance
     
     private var tickers: [String] = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
-    var quotes: [FHQuote]
-    var companies: [FHCompany]
+    var quotes: [FHQuote] = []
+    var companies: [FHCompany] = []
     
     func loadData() {
         for ticker in tickers {
-            stockManager.fetchStock(with: ticker) { (quote, error) in
-                <#code#>
+            stockManager.fetchCompany(with: ticker) { (company, error) in
+                if error != nil {
+                    fatalError("Error while loading company")
+                }
+                
+                guard let company = company else { return }
+                self.companies.append(company)
             }
         }
     }

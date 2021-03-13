@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,7 @@
 		5C2F707825F7F80C007C613A /* StockCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F707625F7F80C007C613A /* StockCell.xib */; };
 		5C2F707B25F7F8A1007C613A /* FHQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F707A25F7F8A1007C613A /* FHQuote.swift */; };
 		5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F707D25F7F8BB007C613A /* Constants.swift */; };
-		5C2F708125F82774007C613A /* StockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F708025F82774007C613A /* StockManager.swift */; };
+		5C2F708125F82774007C613A /* FHProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F708025F82774007C613A /* FHProvider.swift */; };
 		5C4E784B25FCF1D200A62A04 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E784A25FCF1D200A62A04 /* FavouritesViewController.swift */; };
 		5CA8977E25FA327B001D5860 /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8977D25FA327B001D5860 /* StockViewController.swift */; };
 		5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8978125FA9A5F001D5860 /* StockModel.swift */; };
@@ -39,7 +39,7 @@
 		5C2F707625F7F80C007C613A /* StockCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockCell.xib; sourceTree = "<group>"; };
 		5C2F707A25F7F8A1007C613A /* FHQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHQuote.swift; sourceTree = "<group>"; };
 		5C2F707D25F7F8BB007C613A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5C2F708025F82774007C613A /* StockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockManager.swift; sourceTree = "<group>"; };
+		5C2F708025F82774007C613A /* FHProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHProvider.swift; sourceTree = "<group>"; };
 		5C4E784A25FCF1D200A62A04 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		5CA8977D25FA327B001D5860 /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
 		5CA8978125FA9A5F001D5860 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
@@ -74,7 +74,6 @@
 				3BA08C0555C4C02C303A5353 /* Pods-StocksApp.debug.xcconfig */,
 				AD0E2097A3442F0476048AF5 /* Pods-StocksApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -126,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				5CA8978125FA9A5F001D5860 /* StockModel.swift */,
-				5C2F708025F82774007C613A /* StockManager.swift */,
+				5C2F708025F82774007C613A /* FHProvider.swift */,
 				5CA8978525FA9D7A001D5860 /* FinnHub Types */,
 			);
 			path = Models;
@@ -275,7 +274,7 @@
 				5C2F705925F7F43A007C613A /* SceneDelegate.swift in Sources */,
 				5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */,
 				5CA8978725FA9D92001D5860 /* FHCompany.swift in Sources */,
-				5C2F708125F82774007C613A /* StockManager.swift in Sources */,
+				5C2F708125F82774007C613A /* FHProvider.swift in Sources */,
 				5CA8977E25FA327B001D5860 /* StockViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

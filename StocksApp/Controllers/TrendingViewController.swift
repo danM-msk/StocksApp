@@ -23,19 +23,17 @@ class TrendingViewController: UIViewController {
 
 extension TrendingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return popularStocks.count
+        return model.companies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! StockCell
-        cell.ticker.text = "AAPL"
-        cell.companyName.text = "Apple Inc"
-        if let myStock = firstStock {
-            cell.price.text = "\(myStock.c)"
-            cell.priceChange.text = "\(myStock.c - myStock.o)"
-        } else {
-            cell.price.text = "\(popularStocks[indexPath.row].c)"
-            cell.priceChange.text = "\(popularStocks[indexPath.row].o)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
+        guard let stockCell = cell as? StockCell else { return cell }
+//        stockCell.ticker.text = "AAPL"
+//        stockCell.companyName.text = "Apple Inc"
+        let stock = model.companies[indexPath.row]
+        if stock != nil {
+            stockCell.companyName.text = "\(model.companies[indexPath.row].name)"
         }
         return cell
     }
