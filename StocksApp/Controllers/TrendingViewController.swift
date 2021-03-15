@@ -19,6 +19,13 @@ class TrendingViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
     }
+    
+//    func didUpdateTableView() -> Bool {
+//        DispatchQueue.main.async {
+//
+//        } return
+//    }
+    
 }
 
 extension TrendingViewController: UITableViewDataSource {
@@ -29,8 +36,8 @@ extension TrendingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
         guard let stockCell = cell as? StockCell else { return cell }
-//        stockCell.ticker.text = "AAPL"
-//        stockCell.companyName.text = "Apple Inc"
+        stockCell.ticker.text = "AAPL"
+        stockCell.companyName.text = "Apple Inc"
         let stock = model.companies[indexPath.row]
         if stock != nil {
             stockCell.companyName.text = "\(model.companies[indexPath.row].name)"
@@ -44,4 +51,3 @@ extension TrendingViewController: UITableViewDelegate {
         print(indexPath.row)
     }
 }
-
