@@ -3,4 +3,5 @@
 target 'StocksApp' do
     use_frameworks!
     pod 'Alamofire', '~> 5.2'
+pod 'Charts'
 end

@@ -19,9 +19,7 @@
 		5C2F707B25F7F8A1007C613A /* FHQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F707A25F7F8A1007C613A /* FHQuote.swift */; };
 		5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F707D25F7F8BB007C613A /* Constants.swift */; };
 		5C2F708125F82774007C613A /* FHProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F708025F82774007C613A /* FHProvider.swift */; };
-		5C4E784B25FCF1D200A62A04 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E784A25FCF1D200A62A04 /* FavouritesViewController.swift */; };
-		5C4E786325FF88D400A62A04 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E786225FF88D400A62A04 /* SearchViewController.swift */; };
-		5CA8977E25FA327B001D5860 /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8977D25FA327B001D5860 /* StockViewController.swift */; };
+		5C76B843260599370051E843 /* DowJonesTickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C76B842260599370051E843 /* DowJonesTickers.swift */; };
 		5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8978125FA9A5F001D5860 /* StockModel.swift */; };
 		5CA8978725FA9D92001D5860 /* FHCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8978625FA9D92001D5860 /* FHCompany.swift */; };
 /* End PBXBuildFile section */
@@ -41,9 +39,7 @@
 		5C2F707A25F7F8A1007C613A /* FHQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHQuote.swift; sourceTree = "<group>"; };
 		5C2F707D25F7F8BB007C613A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5C2F708025F82774007C613A /* FHProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHProvider.swift; sourceTree = "<group>"; };
-		5C4E784A25FCF1D200A62A04 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
-		5C4E786225FF88D400A62A04 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		5CA8977D25FA327B001D5860 /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
+		5C76B842260599370051E843 /* DowJonesTickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DowJonesTickers.swift; sourceTree = "<group>"; };
 		5CA8978125FA9A5F001D5860 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		5CA8978625FA9D92001D5860 /* FHCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHCompany.swift; sourceTree = "<group>"; };
 		AD0E2097A3442F0476048AF5 /* Pods-StocksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.release.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -117,9 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				5C2F705A25F7F43A007C613A /* TrendingViewController.swift */,
-				5C4E784A25FCF1D200A62A04 /* FavouritesViewController.swift */,
-				5C4E786225FF88D400A62A04 /* SearchViewController.swift */,
-				5CA8977D25FA327B001D5860 /* StockViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -130,6 +123,7 @@
 				5CA8978125FA9A5F001D5860 /* StockModel.swift */,
 				5C2F708025F82774007C613A /* FHProvider.swift */,
 				5CA8978525FA9D7A001D5860 /* FinnHub Types */,
+				5C76B842260599370051E843 /* DowJonesTickers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -268,18 +262,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C4E784B25FCF1D200A62A04 /* FavouritesViewController.swift in Sources */,
 				5C2F705B25F7F43A007C613A /* TrendingViewController.swift in Sources */,
 				5C2F705725F7F43A007C613A /* AppDelegate.swift in Sources */,
 				5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */,
 				5C2F707725F7F80C007C613A /* StockCell.swift in Sources */,
 				5C2F707B25F7F8A1007C613A /* FHQuote.swift in Sources */,
-				5C4E786325FF88D400A62A04 /* SearchViewController.swift in Sources */,
 				5C2F705925F7F43A007C613A /* SceneDelegate.swift in Sources */,
 				5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */,
+				5C76B843260599370051E843 /* DowJonesTickers.swift in Sources */,
 				5CA8978725FA9D92001D5860 /* FHCompany.swift in Sources */,
 				5C2F708125F82774007C613A /* FHProvider.swift in Sources */,
-				5CA8977E25FA327B001D5860 /* StockViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

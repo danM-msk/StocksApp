@@ -10,14 +10,15 @@ import UIKit
 class TrendingViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    let model = StockModel.instance
+    
+    let provider = FHProvider.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.loadData()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
+        loadData()
     }
     
 //    func didUpdateTableView() -> Bool {
@@ -25,23 +26,35 @@ class TrendingViewController: UIViewController {
 //
 //        } return
 //    }
+
+    var dowJonesCompanyProfiles: [FHCompany] = []
+    
+    func loadData() {
+            provider.fetchCompany(with: DowJonesTickers[0]) { (companyResult, error) in
+            if error != nil {
+                print("error while fetching results")
+            }
+            guard let results = companyResult else { return }
+            self.dowJonesCompanyProfiles.append(results)
+        }
+    }
     
 }
 
 extension TrendingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.companies.count
+        return DowJonesTickers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
         guard let stockCell = cell as? StockCell else { return cell }
-        stockCell.ticker.text = "AAPL"
+        stockCell.ticker.text = "\(DowJonesTickers[indexPath.row])"
         stockCell.companyName.text = "Apple Inc"
-        let stock = model.companies[indexPath.row]
-        if stock != nil {
-            stockCell.companyName.text = "\(model.companies[indexPath.row].name)"
-        }
+//        let stock = model.companies[indexPath.row]
+//        if stock != nil {
+//            stockCell.companyName.text = "\(model.companies[indexPath.row].name)"
+//        }
         return cell
     }
 }
