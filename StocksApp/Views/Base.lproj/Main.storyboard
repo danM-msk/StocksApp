@@ -17,9 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQT-T3-eOM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="163"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jQT-T3-eOM">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stocks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqt-4f-qbU">
                                         <rect key="frame" x="30" y="52" width="87.5" height="33.5"/>
@@ -55,10 +54,12 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" name="NavigationBarColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="CWs-W8-NK5"/>
+                                </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dko-le-BDM">
-                                <rect key="frame" x="0.0" y="187" width="414" height="675"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dko-le-BDM">
+                                <rect key="frame" x="0.0" y="160" width="414" height="702"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReusableCell" id="7j9-vN-Pgf">
@@ -74,6 +75,15 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jQT-T3-eOM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0db-3F-qLX"/>
+                            <constraint firstItem="dko-le-BDM" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0ot-Q8-WGL"/>
+                            <constraint firstItem="dko-le-BDM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="R9P-0a-FcW"/>
+                            <constraint firstItem="dko-le-BDM" firstAttribute="top" secondItem="jQT-T3-eOM" secondAttribute="bottom" id="bx8-nM-Hkl"/>
+                            <constraint firstItem="jQT-T3-eOM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="cXC-yF-CPb"/>
+                            <constraint firstItem="jQT-T3-eOM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eCn-em-FFv"/>
+                            <constraint firstItem="dko-le-BDM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kaU-so-zl7"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="boT-do-hQc"/>
                     <connections>
