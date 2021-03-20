@@ -8,59 +8,50 @@
 import UIKit
 
 class TrendingViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView!
-    
-    let provider = FHProvider.instance
+    let model = StockModel.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
-        loadData()
+        setupTableView()
+        model.loadCompanies {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
-//    func didUpdateTableView() -> Bool {
-//        DispatchQueue.main.async {
-//
-//        } return
-//    }
-
-    var dowJonesCompanyProfiles: [FHCompany] = []
+    func setupTableView() {
+        tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
     
-    func loadData() {
-            provider.fetchCompany(with: DowJonesTickers[0]) { (companyResult, error) in
-            if error != nil {
-                print("error while fetching results")
-            }
-            guard let results = companyResult else { return }
-            self.dowJonesCompanyProfiles.append(results)
+    private func dynamicColorFor(_ price: Double) -> UIColor {
+        if price > 0 {
+            return .green
+        } else if price < 0 {
+            return .red
+        } else {
+            return .gray
         }
     }
     
 }
 
-extension TrendingViewController: UITableViewDataSource {
+extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DowJonesTickers.count
+        return model.companyItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
-        guard let stockCell = cell as? StockCell else { return cell }
-        stockCell.ticker.text = "\(DowJonesTickers[indexPath.row])"
-        stockCell.companyName.text = "Apple Inc"
-//        let stock = model.companies[indexPath.row]
-//        if stock != nil {
-//            stockCell.companyName.text = "\(model.companies[indexPath.row].name)"
-//        }
-        return cell
-    }
-}
-
-extension TrendingViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier) as! StockCell
+        let item = model.companyItems[indexPath.row]
+        cell.companyName?.text = item.companyName
+        cell.ticker?.text = item.ticker
+        cell.price?.text = String(format: "%.2f", item.currentPrice!)
+        cell.priceChange?.text = String(format: "%.2f", item.priceChange!)
+        cell.priceChange?.textColor = dynamicColorFor(item.priceChange!)
+        return cell;
     }
 }

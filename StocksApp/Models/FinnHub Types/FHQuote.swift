@@ -1,16 +1,24 @@
 //
 //  FHQuote.swift
-//  StocksApp
+//  FinMonitor
 //
-//  Created by Daniyar Mamadov on 09.03.2021.
+//  Created by Daniyar Mamadov on 17.03.2021.
 //
 
 import Foundation
 
-struct FHQuote: Decodable {
-    let c: Double
-    let h: Double
-    let l: Double
-    let o: Double
-    let pc: Double
+struct FHQuote: Codable {
+    var currentPrice: Double
+    var highestPrice: Double
+    var lowestPrice: Double
+    var openPrice: Double
+    var previousClosePrice: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case currentPrice = "c"
+        case openPrice = "o"
+        case highestPrice = "h"
+        case lowestPrice = "l"
+        case previousClosePrice = "pc"
+    }
 }

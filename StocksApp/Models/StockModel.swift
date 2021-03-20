@@ -9,31 +9,38 @@ import Foundation
 
 class StockModel {
     static let instance = StockModel()
+    private let provider = FHProvider.instance
+//    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "DIS"]
+    private let tickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
+    var companyItems = [FHCompanyItem]()
     
-    let finnhubProvider = FHProvider.instance
-    
-    private var tickers: [String] = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
-    var quotes: [FHQuote] = []
-    var companies: [FHCompany] = []
-    
-    func loadData() {
-        for ticker in tickers {
-            finnhubProvider.fetchCompany(with: ticker) { (company, error) in
-                if error != nil {
-                    fatalError("Error while loading company")
-                }
-                
-                guard let company = company else { return }
-                self.companies.append(company)
-            }
+    func loadCompanies(with completion: @escaping () -> Void) {
+        var companies = [FHCompany]()
+        var quotes = [FHQuote]()
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        provider.fetchCompanies(with: tickers) { loadedCompanies, error in
+            dispatchGroup.leave()
+            companies = loadedCompanies!
         }
         
-        for ticker in tickers {
-            finnhubProvider.fetchQuote(with: ticker) { (quote, error) in
-                if error != nil { print(error) }
-                guard let quote = quote else { return }
-                self.quotes.append(quote)
-            }
+        dispatchGroup.enter()
+        provider.fetchCompaniesPrices(with: tickers) { loadedQuotes, error in
+            dispatchGroup.leave()
+            quotes = loadedQuotes!
         }
+        
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            debugPrint("all data has been loaded")
+            if (companies.count != quotes.count) { return }
+            for i in 0..<companies.count {
+                let item = FHCompanyItem(companies[i], quote: quotes[i])
+                self.companyItems.append(item)
+            }
+            self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
+            completion()
+        }
+        
     }
 }
