@@ -17,7 +17,7 @@ struct FHStock : Codable {
     
     enum CodingKeys: String, CodingKey {
         case ticker = "symbol"
-        case title = "desctiption"
+        case title = "description"
         case currency
         case type
         case figi

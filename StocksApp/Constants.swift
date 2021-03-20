@@ -9,4 +9,5 @@ struct K {
     static let appName = "StocksApp"
     static let cellIdentifier = "ReusableCell"
     static let cellNibName = "StockCell"
+    static let searchedStockCell = "SearchedStockCell"
 }

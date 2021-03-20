@@ -15,7 +15,7 @@ struct FHProvider {
     static let instance = FHProvider()
     
     func fetchSupportedStocks(with completion: @escaping ([FHStock]?, Error?) -> Void) {
-        let request = AF.request("\(baseURL)/stock/symbol", method: .get, parameters: ["token": apiKey, "exchange": "ME"])
+        let request = AF.request("\(baseURL)/stock/symbol", method: .get, parameters: ["token": apiKey, "exchange": "US"])
         
         request.validate().responseDecodable(of: [FHStock].self) { response in
             switch response.result {

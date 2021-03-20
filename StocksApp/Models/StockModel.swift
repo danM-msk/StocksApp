@@ -13,6 +13,7 @@ class StockModel {
 //    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "DIS"]
     private let tickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
     var companyItems = [FHCompanyItem]()
+    var availableCompanies = [FHStock]()
     
     func loadCompanies(with completion: @escaping () -> Void) {
         var companies = [FHCompany]()
@@ -41,6 +42,12 @@ class StockModel {
             self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
             completion()
         }
-        
+    }
+    
+    func fetchSupportedStocks(with completion: @escaping () -> Void) {
+        provider.fetchSupportedStocks { stocks, error in
+            self.availableCompanies = stocks!
+            completion()
+        }
     }
 }
