@@ -1,8 +1,8 @@
 //
 //  FHCompanyItem.swift
-//  FinMonitor
+//  StocksApp
 //
-//  Created by Artem Buryakov on 18.03.2021.
+//  Created by Daniyar Mamadov on 18.03.2021.
 //
 
 import Foundation

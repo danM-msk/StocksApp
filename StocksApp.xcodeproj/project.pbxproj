@@ -24,6 +24,8 @@
 		5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F707D25F7F8BB007C613A /* Constants.swift */; };
 		5C2F708125F82774007C613A /* FHProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F708025F82774007C613A /* FHProvider.swift */; };
 		5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8978125FA9A5F001D5860 /* StockModel.swift */; };
+		5CAEBA262608FC4000280A11 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA252608FC4000280A11 /* Provider.swift */; };
+		5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCB0566260899D700B658E5 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		5C2F707D25F7F8BB007C613A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5C2F708025F82774007C613A /* FHProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHProvider.swift; sourceTree = "<group>"; };
 		5CA8978125FA9A5F001D5860 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
+		5CAEBA252608FC4000280A11 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		5CCB0566260899D700B658E5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 		AD0E2097A3442F0476048AF5 /* Pods-StocksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.release.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.release.xcconfig"; sourceTree = "<group>"; };
 		D4EFAA548C7E9E68B28EB8FB /* Pods_StocksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -118,6 +122,7 @@
 			children = (
 				5C2F705A25F7F43A007C613A /* TrendingViewController.swift */,
 				5C2450182605F65300DDC91E /* SearchViewController.swift */,
+				5CCB0566260899D700B658E5 /* DetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -127,8 +132,8 @@
 			children = (
 				5CA8978125FA9A5F001D5860 /* StockModel.swift */,
 				5C2F708025F82774007C613A /* FHProvider.swift */,
+				5CAEBA252608FC4000280A11 /* Provider.swift */,
 				5CA8978525FA9D7A001D5860 /* FinnHub Types */,
-				5C2450142605E61400DDC91E /* FHCompanyItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				5C24500C2605E4FA00DDC91E /* FHCompany.swift */,
 				5C24500D2605E4FA00DDC91E /* FHQuote.swift */,
 				5C24500B2605E4FA00DDC91E /* FHStock.swift */,
+				5C2450142605E61400DDC91E /* FHCompanyItem.swift */,
 			);
 			path = "FinnHub Types";
 			sourceTree = "<group>";
@@ -268,7 +274,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */,
 				5C2F705B25F7F43A007C613A /* TrendingViewController.swift in Sources */,
+				5CAEBA262608FC4000280A11 /* Provider.swift in Sources */,
 				5C2F705725F7F43A007C613A /* AppDelegate.swift in Sources */,
 				5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */,
 				5C2F707725F7F80C007C613A /* StockCell.swift in Sources */,

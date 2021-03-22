@@ -1,6 +1,6 @@
 //
 //  FHStock.swift
-//  FinMonitor
+//  StocksApp
 //
 //  Created by Daniyar Mamadov on 04.03.2021.
 //

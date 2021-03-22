@@ -11,7 +11,11 @@ class StockModel {
     static let instance = StockModel()
     private let provider = FHProvider.instance
 //    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "DIS"]
+//    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V"]
     private let tickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
+    
+    var favouriteTickers = [String]()
+    
     var companyItems = [FHCompanyItem]()
     var availableCompanies = [FHStock]()
     
@@ -39,7 +43,7 @@ class StockModel {
                 let item = FHCompanyItem(companies[i], quote: quotes[i])
                 self.companyItems.append(item)
             }
-            self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
+//            self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
             completion()
         }
     }
