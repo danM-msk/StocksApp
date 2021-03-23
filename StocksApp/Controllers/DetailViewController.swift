@@ -17,6 +17,11 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        model.loadDayChart {
+            DispatchQueue.main.async {
+                self.ZDESBUDETVIUXA.reloadData()
+            }
+        }
         companyName.text = model.selectedTicker
     }
 

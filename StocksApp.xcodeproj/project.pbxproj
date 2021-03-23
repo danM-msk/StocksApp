@@ -26,6 +26,7 @@
 		5CAEBA262608FC4000280A11 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA252608FC4000280A11 /* Provider.swift */; };
 		5CAEBA3326090B6900280A11 /* FHCompanyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA3226090B6900280A11 /* FHCompanyItem.swift */; };
 		5CAEBA3A2609FA3900280A11 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA392609FA3900280A11 /* FavouritesViewController.swift */; };
+		5CAEBA42260A693000280A11 /* FHStockCandles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA41260A693000280A11 /* FHStockCandles.swift */; };
 		5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCB0566260899D700B658E5 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		5CAEBA252608FC4000280A11 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		5CAEBA3226090B6900280A11 /* FHCompanyItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHCompanyItem.swift; sourceTree = "<group>"; };
 		5CAEBA392609FA3900280A11 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
+		5CAEBA41260A693000280A11 /* FHStockCandles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHStockCandles.swift; sourceTree = "<group>"; };
 		5CCB0566260899D700B658E5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 		AD0E2097A3442F0476048AF5 /* Pods-StocksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.release.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.release.xcconfig"; sourceTree = "<group>"; };
 		D4EFAA548C7E9E68B28EB8FB /* Pods_StocksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +160,7 @@
 				5C24500C2605E4FA00DDC91E /* FHCompany.swift */,
 				5C24500D2605E4FA00DDC91E /* FHQuote.swift */,
 				5C24500B2605E4FA00DDC91E /* FHStock.swift */,
+				5CAEBA41260A693000280A11 /* FHStockCandles.swift */,
 			);
 			path = "FinnHub Types";
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				5C24500E2605E4FA00DDC91E /* FHStock.swift in Sources */,
 				5C2450192605F65300DDC91E /* SearchViewController.swift in Sources */,
 				5C2F705925F7F43A007C613A /* SceneDelegate.swift in Sources */,
+				5CAEBA42260A693000280A11 /* FHStockCandles.swift in Sources */,
 				5CAEBA3326090B6900280A11 /* FHCompanyItem.swift in Sources */,
 				5C24500F2605E4FA00DDC91E /* FHCompany.swift in Sources */,
 				5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */,

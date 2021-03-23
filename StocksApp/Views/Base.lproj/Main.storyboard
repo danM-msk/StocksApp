@@ -298,7 +298,10 @@
                                 </constraints>
                             </imageView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fpB-xc-qCl">
-                                <rect key="frame" x="20" y="549" width="374" height="32"/>
+                                <rect key="frame" x="20" y="554" width="374" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="RCU-WE-OOg"/>
+                                </constraints>
                                 <segments>
                                     <segment title="Day"/>
                                     <segment title="Week"/>
@@ -350,6 +353,15 @@
                                 <rect key="frame" x="0.0" y="89" width="414" height="1"/>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZXi-jr-6ty">
+                                <rect key="frame" x="0.0" y="200" width="414" height="330"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="330" id="swO-fw-YlE"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="GMC-hl-f3f" kind="embed" id="gd5-ME-4Eg"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cCY-GT-BB2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -362,13 +374,16 @@
                             <constraint firstItem="xmk-2t-91A" firstAttribute="leading" secondItem="GV9-o4-dLD" secondAttribute="leading" id="QIP-bc-Dh2"/>
                             <constraint firstItem="cCY-GT-BB2" firstAttribute="trailing" secondItem="Efv-HT-QP0" secondAttribute="trailing" constant="20" id="QiS-ry-bmB"/>
                             <constraint firstItem="xmk-2t-91A" firstAttribute="top" secondItem="lKs-b8-zvG" secondAttribute="bottom" constant="20" id="QkG-nJ-9zd"/>
+                            <constraint firstItem="fpB-xc-qCl" firstAttribute="top" secondItem="ZXi-jr-6ty" secondAttribute="bottom" constant="24" id="Zn3-L1-aWz"/>
                             <constraint firstItem="Efv-HT-QP0" firstAttribute="top" secondItem="cCY-GT-BB2" secondAttribute="top" constant="2" id="a8d-ZL-hfb"/>
                             <constraint firstItem="lKs-b8-zvG" firstAttribute="centerX" secondItem="GV9-o4-dLD" secondAttribute="centerX" id="aup-jg-d16"/>
                             <constraint firstItem="ZBa-XN-hEw" firstAttribute="top" secondItem="xmk-2t-91A" secondAttribute="bottom" constant="24" id="c5C-Dk-w2I"/>
-                            <constraint firstItem="fpB-xc-qCl" firstAttribute="top" secondItem="YCI-b1-nno" secondAttribute="bottom" constant="400" id="fII-0I-nOS"/>
+                            <constraint firstItem="ZXi-jr-6ty" firstAttribute="trailing" secondItem="cCY-GT-BB2" secondAttribute="trailing" id="fU0-6U-226"/>
                             <constraint firstAttribute="trailing" secondItem="xmk-2t-91A" secondAttribute="trailing" id="fVN-gI-bL0"/>
+                            <constraint firstItem="ZXi-jr-6ty" firstAttribute="leading" secondItem="cCY-GT-BB2" secondAttribute="leading" id="gJ7-UR-ci4"/>
                             <constraint firstItem="KIr-Wd-Xts" firstAttribute="leading" secondItem="ZBa-XN-hEw" secondAttribute="trailing" constant="20" id="kn5-Ic-dx7"/>
                             <constraint firstItem="lKs-b8-zvG" firstAttribute="top" secondItem="cCY-GT-BB2" secondAttribute="top" constant="4" id="mpj-wj-Mbc"/>
+                            <constraint firstItem="ZXi-jr-6ty" firstAttribute="top" secondItem="YCI-b1-nno" secondAttribute="bottom" constant="24" id="msu-yA-by1"/>
                             <constraint firstItem="ZBa-XN-hEw" firstAttribute="leading" secondItem="cCY-GT-BB2" secondAttribute="leading" constant="20" id="mts-bo-lww"/>
                             <constraint firstItem="YCI-b1-nno" firstAttribute="leading" secondItem="ZBa-XN-hEw" secondAttribute="trailing" constant="20" id="plL-Ac-Tod"/>
                             <constraint firstItem="KIr-Wd-Xts" firstAttribute="top" secondItem="xmk-2t-91A" secondAttribute="bottom" constant="24" id="wjj-f8-m3T"/>
@@ -384,7 +399,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="POE-sz-n74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6129" y="514"/>
+            <point key="canvasLocation" x="6128.985507246377" y="513.61607142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="caW-m3-fVk">
@@ -402,6 +417,20 @@
                 </navigationController>
             </objects>
             <point key="canvasLocation" x="3626" y="-390"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="akr-ht-s8B">
+            <objects>
+                <viewController id="GMC-hl-f3f" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MgL-kQ-4kz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HVx-1Y-iq9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6899" y="323"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

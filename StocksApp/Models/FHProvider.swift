@@ -38,4 +38,9 @@ class FHProvider: Provider {
         let url = "\(baseURL)/quote?token=\(apiKey)&symbol=\(ticker)"
         super.fetchData(with: url, completion: completion)
     }
+    
+    func fetchDayChart(with tickers: [String], completion: @escaping ([FHStockCandles]?, Error?) -> Void) {
+        let url = "\(baseURL)/forex/candle?resolution=D&from\(Int((NSDate().timeIntervalSince1970)-86400))&to\(Int(NSDate().timeIntervalSince1970))&tocken=\(apiKey)"
+        super.fetchDataEntries(tickers, with: url, key: "symbol", completion: completion)
+    }
 }

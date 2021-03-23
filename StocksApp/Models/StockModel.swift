@@ -18,6 +18,7 @@ class StockModel {
     
     var companyItems = [FHCompanyItem]()
     var availableCompanies = [FHStock]()
+    var dayChart = [FHStockCandles]()
     
     var selectedTicker: String?
     
@@ -53,6 +54,25 @@ class StockModel {
     func fetchSupportedStocks(with completion: @escaping () -> Void) {
         provider.fetchSupportedStocks { stocks, error in
             self.availableCompanies = stocks!
+            completion()
+        }
+    }
+    
+    func loadDayChart(with completion: @escaping () -> Void) {
+        var data = [FHStockCandles]()
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        provider.fetchDayChart(with: tickers) { (loadedData, error) in
+            dispatchGroup.leave()
+            data = loadedData!
+        }
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            debugPrint("Chart has been loaded")
+            for i in 0..<data.count {
+                let chart = FHStockCandles(price: [Double(i)], time: [i])
+                self.dayChart.append(chart)
+                }
             completion()
         }
     }
