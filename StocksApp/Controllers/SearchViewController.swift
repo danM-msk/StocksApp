@@ -107,4 +107,11 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         updateSearchResults(for: searchController)
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
 }

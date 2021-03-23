@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        companyName.text = model.selectedTicker
     }
 
     @IBAction func GoBack(_ sender: UIButton) {
@@ -26,10 +26,8 @@ class DetailViewController: UIViewController {
     
     
     @IBAction func AddToFavourites(_ sender: UIButton) {
-//        AddToFavourites(currentTicker)
+        let currentTicker = model.companyItems.first { $0.ticker == model.selectedTicker }
+        if (currentTicker != nil) { model.favouriteTickers.append(currentTicker!) }
+        dump(model.favouriteTickers)
+        }
     }
-    
-    func addTickerToFavourites(addTicker: String) {
-//        favourites.append(currentTicker)
-    }
-}

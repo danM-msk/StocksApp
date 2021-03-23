@@ -31,20 +31,23 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWH-RF-whS">
                                         <rect key="frame" x="30" y="114" width="140" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="ActiveButtonBackground"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <state key="normal" title="Dow Jones">
-                                            <color key="titleColor" red="0.14901960784313725" green="0.16470588235294117" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" name="ActiveButtonText"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4G-DZ-leA">
                                         <rect key="frame" x="244" y="114" width="140" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.19215686274509802" green="0.21176470588235294" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="NonActiveButtonBackground"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <state key="normal" title="Favourites">
-                                            <color key="titleColor" red="0.60784313725490191" green="0.60392156862745094" blue="0.66274509803921566" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" name="NonActiveButtonText"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="jYS-ql-O9p" kind="show" animates="NO" id="yEr-S6-wR6"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lYY-kg-iv9" userLabel="Search Button">
                                         <rect key="frame" x="364" y="58" width="20" height="21"/>
@@ -94,13 +97,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="boT-do-hQc"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="dko-le-BDM" id="tLE-9O-LSB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4646.376811594203" y="88.392857142857139"/>
+            <point key="canvasLocation" x="4646" y="-390"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="RK9-2k-NZx">
@@ -160,14 +164,118 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vW3-5A-ETW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5634.7826086956529" y="-215.625"/>
+            <point key="canvasLocation" x="6129" y="-390"/>
+        </scene>
+        <!--Favourites View Controller-->
+        <scene sceneID="FIn-Qs-2l7">
+            <objects>
+                <viewController id="jYS-ql-O9p" customClass="FavouritesViewController" customModule="StocksApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oiU-Sh-4y6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s0y-L8-g37">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stocks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsr-Ld-hwi">
+                                        <rect key="frame" x="30" y="52" width="87.5" height="33.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pch-IR-HEt">
+                                        <rect key="frame" x="30" y="113.5" width="140" height="29"/>
+                                        <color key="backgroundColor" name="NonActiveButtonBackground"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="140" id="EUN-dh-u4t"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <state key="normal" title="Dow Jones">
+                                            <color key="titleColor" name="NonActiveButtonText"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="LPQ-zz-o6u"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qb6-wc-2B7">
+                                        <rect key="frame" x="244" y="114" width="140" height="29"/>
+                                        <color key="backgroundColor" name="ActiveButtonBackground"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="140" id="U9B-uH-2KP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <state key="normal" title="Favourites">
+                                            <color key="titleColor" name="ActiveButtonText"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SC0-MH-9cl" userLabel="Search Button">
+                                        <rect key="frame" x="364" y="58" width="20" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="magnifyingglass" catalog="system"/>
+                                        <connections>
+                                            <segue destination="yx7-VH-qjS" kind="presentation" id="PaX-XY-NNK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="NavigationBarColor"/>
+                                <constraints>
+                                    <constraint firstItem="Rsr-Ld-hwi" firstAttribute="top" secondItem="s0y-L8-g37" secondAttribute="top" constant="52" id="5zl-8J-02V"/>
+                                    <constraint firstItem="Pch-IR-HEt" firstAttribute="leading" secondItem="s0y-L8-g37" secondAttribute="leading" constant="30" id="93a-cd-Q11"/>
+                                    <constraint firstItem="SC0-MH-9cl" firstAttribute="top" secondItem="s0y-L8-g37" secondAttribute="top" constant="58" id="DRD-fu-1dQ"/>
+                                    <constraint firstItem="Rsr-Ld-hwi" firstAttribute="leading" secondItem="s0y-L8-g37" secondAttribute="leading" constant="30" id="NvE-2k-CY0"/>
+                                    <constraint firstItem="Qb6-wc-2B7" firstAttribute="top" secondItem="SC0-MH-9cl" secondAttribute="bottom" constant="35" id="Opa-Es-WRn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qb6-wc-2B7" secondAttribute="trailing" constant="30" id="Pin-5J-HcB"/>
+                                    <constraint firstItem="Pch-IR-HEt" firstAttribute="top" secondItem="Rsr-Ld-hwi" secondAttribute="bottom" constant="28" id="iFV-l6-1fd"/>
+                                    <constraint firstAttribute="height" constant="160" id="iK8-Fj-paw"/>
+                                    <constraint firstAttribute="trailing" secondItem="SC0-MH-9cl" secondAttribute="trailing" constant="30" id="uEO-Ze-Xcy"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0np-GZ-Go8">
+                                <rect key="frame" x="0.0" y="160" width="414" height="702"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReusableCell" rowHeight="64" id="lEV-v0-qIj">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lEV-v0-qIj" id="EC1-hY-107">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="0aX-Jb-eNt" kind="show" identifier="goToDetailFromFavourites" id="pyu-rz-YDt"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Tdb-AB-ehJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="0np-GZ-Go8" firstAttribute="bottom" secondItem="Tdb-AB-ehJ" secondAttribute="bottom" id="BHh-VZ-Jfp"/>
+                            <constraint firstItem="0np-GZ-Go8" firstAttribute="top" secondItem="s0y-L8-g37" secondAttribute="bottom" id="SCP-W6-I1U"/>
+                            <constraint firstItem="s0y-L8-g37" firstAttribute="trailing" secondItem="Tdb-AB-ehJ" secondAttribute="trailing" id="YKz-tY-hZh"/>
+                            <constraint firstItem="s0y-L8-g37" firstAttribute="leading" secondItem="Tdb-AB-ehJ" secondAttribute="leading" id="Yw6-qW-8PC"/>
+                            <constraint firstItem="s0y-L8-g37" firstAttribute="top" secondItem="oiU-Sh-4y6" secondAttribute="top" id="ckB-tv-0IJ"/>
+                            <constraint firstItem="0np-GZ-Go8" firstAttribute="leading" secondItem="Tdb-AB-ehJ" secondAttribute="leading" id="ed6-Yw-MHs"/>
+                            <constraint firstItem="0np-GZ-Go8" firstAttribute="trailing" secondItem="Tdb-AB-ehJ" secondAttribute="trailing" id="lJ2-HD-5Xj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aK1-BK-DNE"/>
+                    <connections>
+                        <outlet property="tableView" destination="0np-GZ-Go8" id="NC8-0k-yja"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mMV-YI-WNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4644.927536231884" y="513.61607142857144"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="JmG-xx-UzA">
             <objects>
                 <viewController id="0aX-Jb-eNt" customClass="DetailViewController" customModule="StocksApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GV9-o4-dLD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="$ PRICE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIr-Wd-Xts">
@@ -212,7 +320,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPw-B7-694" userLabel="Back Button">
-                                <rect key="frame" x="20" y="0.0" width="14.5" height="29"/>
+                                <rect key="frame" x="20" y="44" width="14.5" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -223,13 +331,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKs-b8-zvG">
-                                <rect key="frame" x="140" y="4" width="134" height="22"/>
+                                <rect key="frame" x="140" y="48" width="134" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Efv-HT-QP0" userLabel="Favourite Button">
-                                <rect key="frame" x="367" y="2" width="27" height="25"/>
+                                <rect key="frame" x="367" y="46" width="27" height="25"/>
                                 <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <imageReference key="image" image="star" catalog="system" symbolScale="large" renderingMode="original"/>
@@ -268,17 +376,20 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ecd-yi-UkT"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="companyName" destination="lKs-b8-zvG" id="DaF-m9-t1u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="POE-sz-n74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6660.8695652173919" y="95.758928571428569"/>
+            <point key="canvasLocation" x="6129" y="514"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="caW-m3-fVk">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TDb-1p-y9w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="GmX-Qh-Cjd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Cwt-LN-k8n">
@@ -289,21 +400,34 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="xRG-Jb-uZS"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TDb-1p-y9w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3736.2318840579715" y="88.392857142857139"/>
+            <point key="canvasLocation" x="3626" y="-390"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ysO-7Z-uNC"/>
+        <segue reference="pyu-rz-YDt"/>
+        <segue reference="PaX-XY-NNK"/>
+        <segue reference="LPQ-zz-o6u"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <namedColor name="ActiveButtonBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ActiveButtonText">
+            <color red="0.14901960784313725" green="0.16470588235294117" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="NavigationBarColor">
             <color red="0.14900000393390656" green="0.16500000655651093" blue="0.23499999940395355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NonActiveButtonBackground">
+            <color red="0.19215686274509802" green="0.21176470588235294" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NonActiveButtonText">
+            <color red="0.60784313725490191" green="0.60392156862745094" blue="0.66274509803921566" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

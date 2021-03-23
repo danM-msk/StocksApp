@@ -14,10 +14,12 @@ class StockModel {
 //    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V"]
     private let tickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
     
-    var favouriteTickers = [String]()
+    var favouriteTickers = [FHCompanyItem]()
     
     var companyItems = [FHCompanyItem]()
     var availableCompanies = [FHStock]()
+    
+    var selectedTicker: String?
     
     func loadCompanies(with completion: @escaping () -> Void) {
         var companies = [FHCompany]()

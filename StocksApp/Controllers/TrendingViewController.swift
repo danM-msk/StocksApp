@@ -42,8 +42,9 @@ extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
-        let selectedStock = model.companyItems[indexPath!.row].ticker
-        performSegue(withIdentifier: K.trendingToDetailSegueIdentifier, sender: self)
+        let selectedTicker = model.companyItems[indexPath!.row].ticker
+        model.selectedTicker = selectedTicker
+        performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
         
     }
     
