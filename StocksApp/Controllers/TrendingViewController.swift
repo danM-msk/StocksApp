@@ -9,7 +9,10 @@ import UIKit
 
 class TrendingViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var favouritesButton: UIButton!
+    @IBOutlet weak var trendingButton: UIButton!
     let model = StockModel.instance
+    var isFavoritesModeEnabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +22,7 @@ class TrendingViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }
+        dump(model.dayChart)
     }
     
     func setupTableView() {
@@ -36,6 +40,24 @@ class TrendingViewController: UIViewController {
             return .gray
         }
     }
+    
+    @IBAction func favouritesButtonDidTap(_ sender: UIButton) {
+        isFavoritesModeEnabled = true
+        favouritesButton.backgroundColor = UIColor(named: "ActiveButtonBackground")
+        favouritesButton.setTitleColor(UIColor(named: "ActiveButtonText"), for: .normal)
+        trendingButton.backgroundColor = UIColor(named: "NonActiveButtonBackground")
+        trendingButton.setTitleColor(UIColor(named: "NonActiveButtonText"), for: .normal)
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func trendingButtonDidTap(_ sender: UIButton) {
+        isFavoritesModeEnabled = false
+        trendingButton.backgroundColor = UIColor(named: "ActiveButtonBackground")
+        trendingButton.setTitleColor(UIColor(named: "ActiveButtonText"), for: .normal)
+        favouritesButton.backgroundColor = UIColor(named: "NonActiveButtonBackground")
+        favouritesButton.setTitleColor(UIColor(named: "NonActiveButtonText"), for: .normal)
+        self.tableView.reloadData()
+    }
 }
 
 extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -49,12 +71,12 @@ extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.companyItems.count
+        return isFavoritesModeEnabled ? model.favouriteTickers.count : model.companyItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier) as! StockCell
-        let item = model.companyItems[indexPath.row]
+        let item = isFavoritesModeEnabled ? model.favouriteTickers[indexPath.row] : model.companyItems[indexPath.row]
         cell.companyName?.text = item.companyName
         cell.ticker?.text = item.ticker
         cell.price?.text = String(format: "%.2f", item.currentPrice!)

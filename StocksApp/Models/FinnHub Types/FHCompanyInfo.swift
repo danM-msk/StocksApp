@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FHCompany : Codable {
+struct FHCompanyInfo : Codable {
     var country: String?
     var currency: String?
     var exchange: String?

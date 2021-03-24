@@ -19,17 +19,46 @@ class FHProvider: Provider {
         super.fetchData(with: url, completion: completion)
     }
     
-    func fetchCompanies(with tickers: [String], completion: @escaping ([FHCompany]?, Error?) -> Void) {
-        let url = "\(baseURL)/stock/profile2?token=\(apiKey)"
-        super.fetchDataEntries(tickers, with: url, key: "symbol", completion: completion)
+    func fetchCompanyInfoAndPrice(by ticker: String, completion: @escaping (StockItem?, Error?) -> Void) {
+        let dispatchGroup = DispatchGroup()
+        var companyInfo: FHCompanyInfo?
+        var quote: FHQuote?
+        
+        dispatchGroup.enter()
+        AF.request("\(baseURL)/stock/profile2?token=\(apiKey)&symbol=\(ticker)", method: .get)
+            .validate()
+            .responseDecodable(of: FHCompanyInfo.self) { response in
+                dispatchGroup.leave()
+                switch response.result {
+                case .success:
+                    companyInfo = response.value!
+                case let .failure(error):
+                    completion(nil, error)
+                }
+            }
+        
+        dispatchGroup.enter()
+        AF.request("\(baseURL)/quote?token=\(apiKey)&symbol=\(ticker)", method: .get)
+            .validate()
+            .responseDecodable(of: FHQuote.self) { response in
+                dispatchGroup.leave()
+                switch response.result {
+                case .success:
+                    quote = response.value!
+                case let .failure(error):
+                    completion(nil, error)
+                }
+            }
+        
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            debugPrint("company info and price has been loaded")
+            let item = StockItem(companyInfo!, quote: quote!)
+            completion(item, nil)
+        }
+        
     }
     
-    func fetchCompaniesPrices(with tickers: [String], completion: @escaping ([FHQuote]?, Error?) -> Void) {
-        let url = "\(baseURL)/quote?token=\(apiKey)"
-        super.fetchDataEntries(tickers, with: url, key: "symbol", completion: completion)
-    }
-    
-    func fetchCompanyProfile(by ticker: String, completion: @escaping (FHCompany?, Error?) -> Void) {
+    func fetchCompanyProfile(by ticker: String, completion: @escaping (FHCompanyInfo?, Error?) -> Void) {
         let url = "\(baseURL)/stock/profile2?token=\(apiKey)&symbol=\(ticker)"
         super.fetchData(with: url, completion: completion)
     }
@@ -40,7 +69,7 @@ class FHProvider: Provider {
     }
     
     func fetchDayChart(with tickers: [String], completion: @escaping ([FHStockCandles]?, Error?) -> Void) {
-        let url = "\(baseURL)/forex/candle?resolution=D&from\(Int((NSDate().timeIntervalSince1970)-86400))&to\(Int(NSDate().timeIntervalSince1970))&tocken=\(apiKey)"
+        let url = "\(baseURL)/forex/candle?resolution=D&from=\(Int((NSDate().timeIntervalSince1970)-86400))&to=\(Int(NSDate().timeIntervalSince1970))&token=\(apiKey)"
         super.fetchDataEntries(tickers, with: url, key: "symbol", completion: completion)
     }
 }
