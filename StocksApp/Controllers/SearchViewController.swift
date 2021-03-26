@@ -28,7 +28,7 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
                 self.tableView.reloadData()
             }
         }
-        filterContentForSearchText(searchController.searchBar.text ?? "Search here")
+        filterContentForSearchText(searchController.searchBar.text ?? "Search all US stocks")
         updateSearchResults(for: searchController)
     }
     
@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Stocks"
+        searchController.searchBar.placeholder = "Search all US stocks by ticker or name"
         tableView.tableHeaderView = searchController.searchBar
         searchController.searchBar.sizeToFit()
         definesPresentationContext = true
@@ -50,7 +50,8 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.searchController.searchBar.becomeFirstResponder() // does not wotk
+        self.searchController.isActive = true
+        self.searchController.searchBar.becomeFirstResponder()
     }
     
     func filterContentForSearchText(_ searchText: String) {
@@ -65,6 +66,15 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let indexPath = tableView.indexPathForSelectedRow
+        let selectedTicker = model.companyItems[indexPath!.row].ticker
+        model.selectedTicker = selectedTicker
+        performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
+        
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredCompanies.count

@@ -9,11 +9,18 @@ import UIKit
 import Charts
 
 class DetailViewController: UIViewController, ChartViewDelegate {
-
+    
     @IBOutlet weak var companyName: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var priceChangeLabel: UILabel!
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var favouritesButton: UIButton!
+    
+    var addToFavouritesButtonIsSelected = false
     
     let model = StockModel.instance
     var favourites = StockModel.instance.favouriteTickers
+    var values = [ChartDataEntry]()
     
     lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
@@ -22,48 +29,149 @@ class DetailViewController: UIViewController, ChartViewDelegate {
         let priceAxis = chartView.rightAxis
         priceAxis.drawAxisLineEnabled = false
         let timeAxis = chartView.xAxis
-        
+        chartView.legend.enabled = false
+        priceAxis.gridLineDashLengths = [2, 8]
         return chartView
     } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.loadDayChart {
-            DispatchQueue.main.async {
-                let tmp = self.lineChartView
-                self.lineChartView.notifyDataSetChanged()
-            }
-        }
         view.addSubview(lineChartView)
         lineChartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width)
         lineChartView.center = view.center
-        companyName.text = model.selectedTicker
+        
     }
     
-    var values1 = [ChartDataEntry]()
-
+    override func viewWillAppear(_ animated: Bool) {
+        model.loadCompanyInfoAndPrice {
+            DispatchQueue.main.async {
+                guard let item = self.model.selectedCompanyItem.selectBy(ticker: self.model.selectedTicker!)
+                else { return }
+                self.model.selectedCompanyItem.append(item)
+                }
+        }
+        model.loadDayChart {
+            DispatchQueue.main.async {
+                guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                assert(candles.price.count == candles.time.count)
+                for i in 0..<candles.price.count {
+                    let x = Double(candles.time[i])
+                    let y = candles.price[i]
+                    self.values.append(ChartDataEntry(x: x, y: y))
+                }
+                self.setData(self.values)
+                self.lineChartView.notifyDataSetChanged()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        model.selectedTicker = nil
+    }
+    
+    @IBAction func chartDidChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            values.removeAll()
+            model.loadDayChart {
+                DispatchQueue.main.async {
+                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                    assert(candles.price.count == candles.time.count)
+                    for i in 0..<candles.price.count {
+                        let x = Double(candles.time[i])
+                        let y = candles.price[i]
+                        self.values.append(ChartDataEntry(x: x, y: y))
+                    }
+                    self.setData(self.values)
+                    self.lineChartView.notifyDataSetChanged()
+                }
+            }
+        case 1:
+            values.removeAll()
+            model.loadWeekChart {
+                DispatchQueue.main.async {
+                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                    assert(candles.price.count == candles.time.count)
+                    for i in 0..<candles.price.count {
+                        let x = Double(candles.time[i])
+                        let y = candles.price[i]
+                        self.values.append(ChartDataEntry(x: x, y: y))
+                    }
+                    self.setData(self.values)
+                    self.lineChartView.notifyDataSetChanged()
+                }
+            }
+        case 2:
+            values.removeAll()
+            model.loadMonthChart {
+                DispatchQueue.main.async {
+                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                    assert(candles.price.count == candles.time.count)
+                    for i in 0..<candles.price.count {
+                        let x = Double(candles.time[i])
+                        let y = candles.price[i]
+                        self.values.append(ChartDataEntry(x: x, y: y))
+                    }
+                    self.setData(self.values)
+                    self.lineChartView.notifyDataSetChanged()
+                }
+            }
+        default:
+            values.removeAll()
+            model.loadDayChart {
+                DispatchQueue.main.async {
+                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                    assert(candles.price.count == candles.time.count)
+                    for i in 0..<candles.price.count {
+                        let x = Double(candles.time[i])
+                        let y = candles.price[i]
+                        self.values.append(ChartDataEntry(x: x, y: y))
+                    }
+                    self.setData(self.values)
+                    self.lineChartView.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+    
     @IBAction func GoBack(_ sender: UIButton) {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    
-    @IBAction func AddToFavourites(_ sender: UIButton) {
-        let currentTicker = model.companyItems.first { $0.ticker == model.selectedTicker }
-        if (currentTicker != nil) { model.favouriteTickers.append(currentTicker!) }
-        dump(model.favouriteTickers)
+    @IBAction func addToFavouritesButtonDidTap(_ sender: UIButton) {
+        addToFavouritesButtonIsSelected = !addToFavouritesButtonIsSelected
+        updateAddToFavouritesButton()
+    }
+    func updateAddToFavouritesButton() {
+        if addToFavouritesButtonIsSelected {
+            favouritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            
         }
+        else {
+            favouritesButton.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+        
+        let currentTicker = model.companyItems.selectBy(ticker: model.selectedTicker!)
+        if (currentTicker != nil) { model.favouriteTickers.append(currentTicker!) }
+        print(model.favouriteTickers[0].ticker)
+    }
     
-//    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-//        print(entry)
-//    }
     
     func setData(_ data: [ChartDataEntry]?) {
         let set1 = LineChartDataSet(entries: data)
         set1.drawCirclesEnabled = false
         set1.lineWidth = 2
-        set1.setColor(.darkGray)
-        set1.fill = Fill(color: .darkGray)
-        set1.fillAlpha = 0.4
+        if values.first!.y < values.last!.y {
+            set1.setColor(.systemGreen)
+            set1.fill = Fill(color: .systemGreen)
+        } else if values.first!.y > values.last!.y {
+            set1.setColor(.systemRed)
+            set1.fill = Fill(color: .systemRed)
+        } else {
+            set1.setColor(.systemGray)
+            set1.fill = Fill(color: .systemGray)
+        }
+        set1.fillAlpha = 0.2
         set1.drawFilledEnabled = true
         
         let data = LineChartData(dataSet: set1)
@@ -71,3 +179,4 @@ class DetailViewController: UIViewController, ChartViewDelegate {
         lineChartView.data = data
     }
 }
+

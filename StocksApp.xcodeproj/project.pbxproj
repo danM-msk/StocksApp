@@ -14,7 +14,7 @@
 		5C2450192605F65300DDC91E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2450182605F65300DDC91E /* SearchViewController.swift */; };
 		5C2F705725F7F43A007C613A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F705625F7F43A007C613A /* AppDelegate.swift */; };
 		5C2F705925F7F43A007C613A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F705825F7F43A007C613A /* SceneDelegate.swift */; };
-		5C2F705B25F7F43A007C613A /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F705A25F7F43A007C613A /* TrendingViewController.swift */; };
+		5C2F705B25F7F43A007C613A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F705A25F7F43A007C613A /* MainViewController.swift */; };
 		5C2F705E25F7F43A007C613A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F705C25F7F43A007C613A /* Main.storyboard */; };
 		5C2F706025F7F43B007C613A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F705F25F7F43B007C613A /* Assets.xcassets */; };
 		5C2F706325F7F43B007C613A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F706125F7F43B007C613A /* LaunchScreen.storyboard */; };
@@ -26,6 +26,7 @@
 		5CAEBA262608FC4000280A11 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA252608FC4000280A11 /* Provider.swift */; };
 		5CAEBA3326090B6900280A11 /* StockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA3226090B6900280A11 /* StockItem.swift */; };
 		5CAEBA42260A693000280A11 /* FHStockCandles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA41260A693000280A11 /* FHStockCandles.swift */; };
+		5CAEBA4D260BBD8300280A11 /* FHResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA4C260BBD8300280A11 /* FHResolution.swift */; };
 		5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCB0566260899D700B658E5 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +39,7 @@
 		5C2F705325F7F43A007C613A /* StocksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C2F705625F7F43A007C613A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C2F705825F7F43A007C613A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5C2F705A25F7F43A007C613A /* TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
+		5C2F705A25F7F43A007C613A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5C2F705D25F7F43A007C613A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5C2F705F25F7F43B007C613A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C2F706225F7F43B007C613A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		5CAEBA252608FC4000280A11 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		5CAEBA3226090B6900280A11 /* StockItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockItem.swift; sourceTree = "<group>"; };
 		5CAEBA41260A693000280A11 /* FHStockCandles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHStockCandles.swift; sourceTree = "<group>"; };
+		5CAEBA4C260BBD8300280A11 /* FHResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHResolution.swift; sourceTree = "<group>"; };
 		5CCB0566260899D700B658E5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 		AD0E2097A3442F0476048AF5 /* Pods-StocksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.release.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.release.xcconfig"; sourceTree = "<group>"; };
 		D4EFAA548C7E9E68B28EB8FB /* Pods_StocksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +124,7 @@
 		5C4E784E25FCF38000A62A04 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5C2F705A25F7F43A007C613A /* TrendingViewController.swift */,
+				5C2F705A25F7F43A007C613A /* MainViewController.swift */,
 				5C2450182605F65300DDC91E /* SearchViewController.swift */,
 				5CCB0566260899D700B658E5 /* DetailViewController.swift */,
 			);
@@ -158,6 +160,7 @@
 				5C24500D2605E4FA00DDC91E /* FHQuote.swift */,
 				5C24500B2605E4FA00DDC91E /* FHStock.swift */,
 				5CAEBA41260A693000280A11 /* FHStockCandles.swift */,
+				5CAEBA4C260BBD8300280A11 /* FHResolution.swift */,
 			);
 			path = "FinnHub Types";
 			sourceTree = "<group>";
@@ -278,8 +281,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */,
-				5C2F705B25F7F43A007C613A /* TrendingViewController.swift in Sources */,
+				5C2F705B25F7F43A007C613A /* MainViewController.swift in Sources */,
 				5CAEBA262608FC4000280A11 /* Provider.swift in Sources */,
+				5CAEBA4D260BBD8300280A11 /* FHResolution.swift in Sources */,
 				5C2F705725F7F43A007C613A /* AppDelegate.swift in Sources */,
 				5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */,
 				5C2F707725F7F80C007C613A /* StockCell.swift in Sources */,

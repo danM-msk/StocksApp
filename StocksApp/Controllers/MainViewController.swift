@@ -7,22 +7,25 @@
 
 import UIKit
 
-class TrendingViewController: UIViewController {
+class MainViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var favouritesButton: UIButton!
     @IBOutlet weak var trendingButton: UIButton!
+    @IBOutlet weak var navigationBarView: UIView!
     let model = StockModel.instance
     var isFavoritesModeEnabled = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBarView.layer.cornerRadius = 10
+        trendingButton.layer.cornerRadius = 16
+        favouritesButton.layer.cornerRadius = 16
+        
         setupTableView()
-        model.loadCompanies {
+        model.loadCompaniesInfoAndPrice {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
-        dump(model.dayChart)
     }
     
     func setupTableView() {
@@ -33,11 +36,11 @@ class TrendingViewController: UIViewController {
     
     private func dynamicColorFor(_ price: Double) -> UIColor {
         if price > 0 {
-            return .green
+            return .systemGreen
         } else if price < 0 {
-            return .red
+            return .systemRed
         } else {
-            return .gray
+            return .systemGray
         }
     }
     
@@ -60,10 +63,10 @@ class TrendingViewController: UIViewController {
     }
 }
 
-extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let indexPath = tableView.indexPathForSelectedRow //optional, to get from any UIButton for example
+        let indexPath = tableView.indexPathForSelectedRow
         let selectedTicker = model.companyItems[indexPath!.row].ticker
         model.selectedTicker = selectedTicker
         performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
@@ -79,8 +82,12 @@ extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
         let item = isFavoritesModeEnabled ? model.favouriteTickers[indexPath.row] : model.companyItems[indexPath.row]
         cell.companyName?.text = item.companyName
         cell.ticker?.text = item.ticker
-        cell.price?.text = String(format: "%.2f", item.currentPrice!)
-        cell.priceChange?.text = String(format: "%.2f", item.priceChange!)
+        cell.price?.text = "$" + String(format: "%.2f", item.currentPrice!)
+        if item.priceChange > 0 {
+            cell.priceChange?.text = "+" + String(format: "%.2f", item.priceChange!) + "%"
+        } else {
+            cell.priceChange?.text = String(format: "%.2f", item.priceChange!) + "%"
+        }
         cell.priceChange?.textColor = dynamicColorFor(item.priceChange!)
         return cell;
     }

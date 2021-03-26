@@ -12,6 +12,7 @@ class StockItem {
     var companyName: String!
     var currentPrice: Double!
     var priceChange: Double!
+    var candles: FHStockCandles?
     
     init(_ company: FHCompanyInfo, quote: FHQuote) {
         self.companyName = company.name
@@ -28,5 +29,14 @@ class StockItem {
     func updateCompanyInfo(_ company: FHCompanyInfo) {
         self.companyName = company.name
         self.ticker = company.ticker
+    }
+}
+
+extension Array where Element == StockItem {
+    func selectBy(ticker: String) -> StockItem? {
+        for item in self {
+            if item.ticker == ticker { return item }
+        }
+        return nil
     }
 }

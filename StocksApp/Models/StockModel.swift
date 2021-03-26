@@ -11,24 +11,27 @@ class StockModel {
     static let instance = StockModel()
     static let detailVC = DetailViewController()
     private let provider = FHProvider.instance
-//    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "DIS"]
-//    private let tickers = ["MMM", "AXP","T", "BA", "CAT", "CVX", "CSCO", "DD", "XOM", "GE", "GS", "INTC", "IBM", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "KO", "HD", "TRV", "UTX", "UNH", "VZ", "V"]
-    private let tickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA"]
-    
+//    private let trendingTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA", "BAC", "F", "JPM", "AAL", "CSCO", "GE", "XOM", "LOGI"]
+    private let trendingTickers = ["AAPL"]
     var favouriteTickers = [StockItem]()
-    
     var companyItems = [StockItem]()
     var availableCompanies = [FHStock]()
-    var dayChart = [FHStockCandles]()
-    
     var selectedTicker: String?
+    var selectedCompanyItem = [StockItem]()
     
-    func loadCompanies(with completion: @escaping () -> Void) {
+    func loadCompanyInfoAndPrice(with completion: @escaping () -> Void) {
+        provider.fetchCompanyInfoAndPrice(by: selectedTicker!) { (loadedStockItem, error) in
+            self.selectedCompanyItem.append(loadedStockItem!)
+            completion()
+        }
+    }
+    
+    func loadCompaniesInfoAndPrice(with completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
         
-        for ticker in tickers {
+        for ticker in trendingTickers {
             dispatchGroup.enter()
-            provider.fetchCompanyInfoAndPrice(by: ticker) { (loadedStockItem, erro) in
+            provider.fetchCompanyInfoAndPrice(by: ticker) { (loadedStockItem, error) in
                 dispatchGroup.leave()
                 self.companyItems.append(loadedStockItem!)
             }
@@ -49,19 +52,25 @@ class StockModel {
     }
     
     func loadDayChart(with completion: @escaping () -> Void) {
-        var data = [FHStockCandles]()
-        let dispatchGroup = DispatchGroup()
-        
-        dispatchGroup.enter()
-        provider.fetchDayChart(with: tickers) { (loadedData, error) in
-            dispatchGroup.leave()
-            data = loadedData!
+        provider.fetchChart(by: selectedTicker!, resolution: .day) { (loadedCandles, error) in
+            guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
+            item.candles = loadedCandles
+            completion()
         }
-        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
-            debugPrint("Chart has been loaded")
-            for i in 0..<data.count {
-                let chart = FHStockCandles(price: [Double(i)], time: [i])
-                self.dayChart.append(chart)                }
+    }
+    
+    func loadWeekChart(with completion: @escaping () -> Void) {
+        provider.fetchChart(by: selectedTicker!, resolution: .week) { (loadedCandles, error) in
+            guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
+            item.candles = loadedCandles
+            completion()
+        }
+    }
+    
+    func loadMonthChart(with completion: @escaping () -> Void) {
+        provider.fetchChart(by: selectedTicker!, resolution: .month) { (loadedCandles, error) in
+            guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
+            item.candles = loadedCandles
             completion()
         }
     }
