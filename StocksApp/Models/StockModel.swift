@@ -51,24 +51,8 @@ class StockModel {
         }
     }
     
-    func loadDayChart(with completion: @escaping () -> Void) {
-        provider.fetchChart(by: selectedTicker!, resolution: .day) { (loadedCandles, error) in
-            guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
-            item.candles = loadedCandles
-            completion()
-        }
-    }
-    
-    func loadWeekChart(with completion: @escaping () -> Void) {
-        provider.fetchChart(by: selectedTicker!, resolution: .week) { (loadedCandles, error) in
-            guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
-            item.candles = loadedCandles
-            completion()
-        }
-    }
-    
-    func loadMonthChart(with completion: @escaping () -> Void) {
-        provider.fetchChart(by: selectedTicker!, resolution: .month) { (loadedCandles, error) in
+    func loadChart(with resolution: FHResolution, completion: @escaping () -> Void) {
+        provider.fetchChart(by: selectedTicker!, resolution: resolution) { (loadedCandles, error) in
             guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
             item.candles = loadedCandles
             completion()

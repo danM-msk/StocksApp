@@ -50,7 +50,7 @@ class DetailViewController: UIViewController, ChartViewDelegate {
                 self.companyName.text = self.model.selectedCompanyItem?.companyName
             }
         }
-        model.loadDayChart {
+        model.loadChart(with: .day, completion: {
             DispatchQueue.main.async {
                 guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
                 assert(candles.price.count == candles.time.count)
@@ -62,7 +62,7 @@ class DetailViewController: UIViewController, ChartViewDelegate {
                 self.setData(self.values)
                 self.lineChartView.notifyDataSetChanged()
             }
-        }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,67 +70,34 @@ class DetailViewController: UIViewController, ChartViewDelegate {
     }
     
     @IBAction func chartDidChange(_ sender: UISegmentedControl) {
+        let loadChartCompletion: (_ resolution: FHResolution) -> () = {
+            self.model.loadChart(with: $0, completion: {
+                self.values.removeAll()
+                DispatchQueue.main.async {
+                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                    assert(candles.price.count == candles.time.count)
+                    for i in 0..<candles.price.count {
+                        let x = Double(candles.time[i])
+                        let y = candles.price[i]
+                        self.values.append(ChartDataEntry(x: x, y: y))
+                    }
+                    self.setData(self.values)
+                    self.lineChartView.notifyDataSetChanged()
+                }
+            })
+        }
+        
         switch sender.selectedSegmentIndex {
         case 0:
-            values.removeAll()
-            model.loadDayChart {
-                DispatchQueue.main.async {
-                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
-                    assert(candles.price.count == candles.time.count)
-                    for i in 0..<candles.price.count {
-                        let x = Double(candles.time[i])
-                        let y = candles.price[i]
-                        self.values.append(ChartDataEntry(x: x, y: y))
-                    }
-                    self.setData(self.values)
-                    self.lineChartView.notifyDataSetChanged()
-                }
-            }
+            loadChartCompletion(.day)
         case 1:
-            values.removeAll()
-            model.loadWeekChart {
-                DispatchQueue.main.async {
-                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
-                    assert(candles.price.count == candles.time.count)
-                    for i in 0..<candles.price.count {
-                        let x = Double(candles.time[i])
-                        let y = candles.price[i]
-                        self.values.append(ChartDataEntry(x: x, y: y))
-                    }
-                    self.setData(self.values)
-                    self.lineChartView.notifyDataSetChanged()
-                }
-            }
+            loadChartCompletion(.week)
         case 2:
-            values.removeAll()
-            model.loadMonthChart {
-                DispatchQueue.main.async {
-                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
-                    assert(candles.price.count == candles.time.count)
-                    for i in 0..<candles.price.count {
-                        let x = Double(candles.time[i])
-                        let y = candles.price[i]
-                        self.values.append(ChartDataEntry(x: x, y: y))
-                    }
-                    self.setData(self.values)
-                    self.lineChartView.notifyDataSetChanged()
-                }
-            }
+            loadChartCompletion(.month)
+
         default:
-            values.removeAll()
-            model.loadDayChart {
-                DispatchQueue.main.async {
-                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
-                    assert(candles.price.count == candles.time.count)
-                    for i in 0..<candles.price.count {
-                        let x = Double(candles.time[i])
-                        let y = candles.price[i]
-                        self.values.append(ChartDataEntry(x: x, y: y))
-                    }
-                    self.setData(self.values)
-                    self.lineChartView.notifyDataSetChanged()
-                }
-            }
+            loadChartCompletion(.day)
+
         }
     }
     
