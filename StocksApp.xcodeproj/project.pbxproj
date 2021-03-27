@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D09A9D5A8C14658E2C058F3 /* Pods_StocksApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4EFAA548C7E9E68B28EB8FB /* Pods_StocksApp.framework */; };
+		5C1F577A260F06E1004882A8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F5778260F06E0004882A8 /* DataModel.xcdatamodeld */; };
 		5C24500E2605E4FA00DDC91E /* FHStock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24500B2605E4FA00DDC91E /* FHStock.swift */; };
 		5C24500F2605E4FA00DDC91E /* FHCompanyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24500C2605E4FA00DDC91E /* FHCompanyInfo.swift */; };
 		5C2450102605E4FA00DDC91E /* FHQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24500D2605E4FA00DDC91E /* FHQuote.swift */; };
@@ -22,6 +23,7 @@
 		5C2F707825F7F80C007C613A /* StockCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C2F707625F7F80C007C613A /* StockCell.xib */; };
 		5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F707D25F7F8BB007C613A /* Constants.swift */; };
 		5C2F708125F82774007C613A /* FHProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F708025F82774007C613A /* FHProvider.swift */; };
+		5C7A6E12260E76E8002F90E6 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7A6E11260E76E8002F90E6 /* Alert.swift */; };
 		5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8978125FA9A5F001D5860 /* StockModel.swift */; };
 		5CAEBA262608FC4000280A11 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA252608FC4000280A11 /* Provider.swift */; };
 		5CAEBA3326090B6900280A11 /* StockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA3226090B6900280A11 /* StockItem.swift */; };
@@ -32,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		3BA08C0555C4C02C303A5353 /* Pods-StocksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.debug.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5C1F5779260F06E0004882A8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		5C24500B2605E4FA00DDC91E /* FHStock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHStock.swift; sourceTree = "<group>"; };
 		5C24500C2605E4FA00DDC91E /* FHCompanyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHCompanyInfo.swift; sourceTree = "<group>"; };
 		5C24500D2605E4FA00DDC91E /* FHQuote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHQuote.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		5C2F707625F7F80C007C613A /* StockCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockCell.xib; sourceTree = "<group>"; };
 		5C2F707D25F7F8BB007C613A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5C2F708025F82774007C613A /* FHProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHProvider.swift; sourceTree = "<group>"; };
+		5C7A6E11260E76E8002F90E6 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5CA8978125FA9A5F001D5860 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		5CAEBA252608FC4000280A11 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		5CAEBA3226090B6900280A11 /* StockItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockItem.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				5CAEBA252608FC4000280A11 /* Provider.swift */,
 				5CAEBA3226090B6900280A11 /* StockItem.swift */,
 				5CA8978525FA9D7A001D5860 /* FinnHub Types */,
+				5C7A6E11260E76E8002F90E6 /* Alert.swift */,
+				5C1F5778260F06E0004882A8 /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 				5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */,
 				5C2F705B25F7F43A007C613A /* MainViewController.swift in Sources */,
 				5CAEBA262608FC4000280A11 /* Provider.swift in Sources */,
+				5C7A6E12260E76E8002F90E6 /* Alert.swift in Sources */,
 				5CAEBA4D260BBD8300280A11 /* FHResolution.swift in Sources */,
 				5C2F705725F7F43A007C613A /* AppDelegate.swift in Sources */,
 				5CA8978225FA9A5F001D5860 /* StockModel.swift in Sources */,
@@ -294,6 +301,7 @@
 				5CAEBA42260A693000280A11 /* FHStockCandles.swift in Sources */,
 				5CAEBA3326090B6900280A11 /* StockItem.swift in Sources */,
 				5C24500F2605E4FA00DDC91E /* FHCompanyInfo.swift in Sources */,
+				5C1F577A260F06E1004882A8 /* DataModel.xcdatamodeld in Sources */,
 				5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */,
 				5C2F708125F82774007C613A /* FHProvider.swift in Sources */,
 			);
@@ -499,6 +507,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5C1F5778260F06E0004882A8 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5C1F5779260F06E0004882A8 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 5C1F5779260F06E0004882A8 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5C2F704B25F7F43A007C613A /* Project object */;
 }

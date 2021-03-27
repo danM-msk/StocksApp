@@ -44,11 +44,11 @@ class DetailViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         model.loadCompanyInfoAndPrice {
+            guard let item = self.model.selectedCompanyItem else { return }
+            self.model.selectedCompanyItem = item
             DispatchQueue.main.async {
-                guard let item = self.model.selectedCompanyItem.selectBy(ticker: self.model.selectedTicker!)
-                else { return }
-                self.model.selectedCompanyItem.append(item)
-                }
+                self.companyName.text = self.model.selectedCompanyItem?.companyName
+            }
         }
         model.loadDayChart {
             DispatchQueue.main.async {

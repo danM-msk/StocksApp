@@ -11,17 +11,17 @@ class StockModel {
     static let instance = StockModel()
     static let detailVC = DetailViewController()
     private let provider = FHProvider.instance
-//    private let trendingTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA", "BAC", "F", "JPM", "AAL", "CSCO", "GE", "XOM", "LOGI"]
-    private let trendingTickers = ["AAPL"]
+    private let trendingTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA", "BAC", "F", "JPM", "AAL", "CSCO", "GE", "XOM", "LOGI"]
+//    private let trendingTickers = ["AAPL"]
     var favouriteTickers = [StockItem]()
     var companyItems = [StockItem]()
     var availableCompanies = [FHStock]()
     var selectedTicker: String?
-    var selectedCompanyItem = [StockItem]()
+    var selectedCompanyItem: StockItem?
     
     func loadCompanyInfoAndPrice(with completion: @escaping () -> Void) {
         provider.fetchCompanyInfoAndPrice(by: selectedTicker!) { (loadedStockItem, error) in
-            self.selectedCompanyItem.append(loadedStockItem!)
+            self.selectedCompanyItem = loadedStockItem
             completion()
         }
     }
