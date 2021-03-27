@@ -18,7 +18,6 @@ class Provider {
                     let decodedItem = response.value!
                     completion(decodedItem, nil)
                 case let .failure(error):
-                    Alert.showLimitAlert(on: MainViewController())
                     completion(nil, error)
                 }
             }
@@ -38,7 +37,6 @@ class Provider {
                         let decodedItem = response.value!
                         loadedEntries.append(decodedItem)
                     case let .failure(error):
-                        Alert.showLimitAlert(on: MainViewController())
                         print("failed to load \(String(describing: T.self)): \(error)")
                     }
                     fetchGroup.leave()

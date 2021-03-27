@@ -23,6 +23,7 @@ class FHProvider: Provider {
         let dispatchGroup = DispatchGroup()
         var companyInfo: FHCompanyInfo?
         var quote: FHQuote?
+        var fetchingError: AFError?
         
         dispatchGroup.enter()
         AF.request("\(baseURL)/stock/profile2?token=\(apiKey)&symbol=\(ticker)", method: .get)
@@ -33,7 +34,7 @@ class FHProvider: Provider {
                 case .success:
                     companyInfo = response.value!
                 case let .failure(error):
-                    completion(nil, error)
+                    fetchingError = error
                 }
             }
         
@@ -46,14 +47,19 @@ class FHProvider: Provider {
                 case .success:
                     quote = response.value!
                 case let .failure(error):
-                    completion(nil, error)
+                    fetchingError = error
                 }
             }
         
         dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
             debugPrint("company info and price has been loaded")
-            let item = StockItem(companyInfo!, quote: quote!)
-            completion(item, nil)
+            if let companyInfo = companyInfo, let quote = quote {
+                let item = StockItem(companyInfo, quote: quote)
+                completion(item, nil)
+            } else {
+                completion(nil, fetchingError)
+            }
+            
         }
         
     }

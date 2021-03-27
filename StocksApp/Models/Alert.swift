@@ -7,16 +7,12 @@
 
 import UIKit
 
-struct Alert {
-    private static func showBasicAlert(on VC: MainViewController, with title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+extension UIViewController {
+    func showAlert(with title: String, message: String) {
         DispatchQueue.main.async {
-            VC.present(alert, animated: true)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true)
         }
-    }
-    
-    static func showLimitAlert(on VC: MainViewController) {
-        showBasicAlert(on: VC, with: "Title", message: "Reason")
     }
 }

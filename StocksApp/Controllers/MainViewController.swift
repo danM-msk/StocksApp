@@ -21,7 +21,11 @@ class MainViewController: UIViewController {
         favouritesButton.layer.cornerRadius = 16
         
         setupTableView()
-        model.loadCompaniesInfoAndPrice {
+        model.loadCompaniesInfoAndPrice {error in
+            if error != nil {
+                self.showAlert(with: "Reason", message: error!.localizedDescription)
+                return
+            }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

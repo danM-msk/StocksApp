@@ -26,28 +26,45 @@ class StockModel {
         }
     }
     
-    func loadCompaniesInfoAndPrice(with completion: @escaping () -> Void) {
+    func loadCompaniesInfoAndPrice(with completion: @escaping (Error?) -> Void) {
         let dispatchGroup = DispatchGroup()
+        var allDataHasBeenLoaded = true
+        var fetchingError: Error?
         
         for ticker in trendingTickers {
             dispatchGroup.enter()
             provider.fetchCompanyInfoAndPrice(by: ticker) { (loadedStockItem, error) in
                 dispatchGroup.leave()
-                self.companyItems.append(loadedStockItem!)
+                guard let loadedStockItem = loadedStockItem else {
+                    fetchingError = error
+                    allDataHasBeenLoaded = false
+                    return
+                }
+                self.companyItems.append(loadedStockItem)
             }
         }
         
         dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
-            debugPrint("all data has been loaded")
-            self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
-            completion()
+            if allDataHasBeenLoaded == true {
+                debugPrint("all data has been loaded")
+                self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
+                completion(nil)
+            } else {
+                print(fetchingError?.localizedDescription ?? "error while fetching companies and prices")
+                self.companyItems.removeAll()
+                completion(fetchingError)
+            }
         }
     }
     
-    func fetchSupportedStocks(with completion: @escaping () -> Void) {
+    func fetchSupportedStocks(with completion: @escaping (Error?) -> Void) {
         provider.fetchSupportedStocks { stocks, error in
-            self.availableCompanies = stocks!
-            completion()
+            guard let stocks = stocks else {
+                completion(error)
+                return
+            }
+            self.availableCompanies = stocks
+            completion(nil)
         }
     }
     

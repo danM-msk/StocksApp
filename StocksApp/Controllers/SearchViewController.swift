@@ -23,7 +23,11 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
         super.viewDidLoad()
         setupTableView()
         setupSearchBar()
-        model.fetchSupportedStocks {
+        model.fetchSupportedStocks { error in
+            if error != nil {
+                self.showAlert(with: "Reason", message: error!.localizedDescription)
+                return
+            }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -118,7 +122,8 @@ extension SearchViewController: UISearchBarDelegate {
         updateSearchResults(for: searchController)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        model.selectedTicker = nil
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
