@@ -13,15 +13,24 @@ class StockModel {
     private let provider = FHProvider.instance
     private let trendingTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA", "BAC", "F", "JPM", "AAL", "CSCO", "GE", "XOM", "LOGI"]
 //    private let trendingTickers = ["AAPL"]
-    var favouriteTickers = [StockItem]()
     var companyItems = [StockItem]()
     var availableCompanies = [FHStock]()
     var selectedTicker: String?
-    var selectedCompanyItem: StockItem?
+    weak var selectedCompanyItem: StockItem?
     
     func loadCompanyInfoAndPrice(with completion: @escaping () -> Void) {
         provider.fetchCompanyInfoAndPrice(by: selectedTicker!) { (loadedStockItem, error) in
-            self.selectedCompanyItem = loadedStockItem
+                // do error process to details view controller (alert)
+                // return
+            
+            self.selectedCompanyItem = self.companyItems.select(by: self.selectedTicker!)
+            
+            self.selectedCompanyItem?.ticker = loadedStockItem!.ticker
+            self.selectedCompanyItem?.companyName = loadedStockItem!.companyName
+            self.selectedCompanyItem?.currentPrice = loadedStockItem!.currentPrice
+            self.selectedCompanyItem?.priceChange = loadedStockItem!.priceChange
+            self.selectedCompanyItem?.candles = loadedStockItem!.candles
+            
             completion()
         }
     }
@@ -70,7 +79,7 @@ class StockModel {
     
     func loadChart(with resolution: FHResolution, completion: @escaping () -> Void) {
         provider.fetchChart(by: selectedTicker!, resolution: resolution) { (loadedCandles, error) in
-            guard let item = self.companyItems.selectBy(ticker: self.selectedTicker!) else { return }
+            guard let item = self.companyItems.select(by: self.selectedTicker!) else { return }
             item.candles = loadedCandles
             completion()
         }

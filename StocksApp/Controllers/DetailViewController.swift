@@ -13,13 +13,12 @@ class DetailViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var companyName: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceChangeLabel: UILabel!
-    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var favouritesButton: UIButton!
     
     var addToFavouritesButtonIsSelected = false
     
     let model = StockModel.instance
-    var favourites = StockModel.instance.favouriteTickers
     var values = [ChartDataEntry]()
     
     lazy var lineChartView: LineChartView = {
@@ -39,20 +38,31 @@ class DetailViewController: UIViewController, ChartViewDelegate {
         view.addSubview(lineChartView)
         lineChartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width)
         lineChartView.center = view.center
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         model.loadCompanyInfoAndPrice {
             guard let item = self.model.selectedCompanyItem else { return }
-            self.model.selectedCompanyItem = item
             DispatchQueue.main.async {
-                self.companyName.text = self.model.selectedCompanyItem?.companyName
+                self.companyName.text = item.companyName
+//                let logo : UIImage = UIImage(named: item.logoUrl!)!
+//                self.logoImage = UIImageView(image: logo)
+//                self.load(item.logoUrl)
+                self.priceLabel.text = "$\(Double(item.currentPrice))"
+                if item.priceChange > 0 {
+                    self.priceChangeLabel.text = "+" + String(format: "%.2f", item.priceChangePercentage!) + "%" + "|" + "$" + String(format: "%.2f", abs(item.priceChange!))
+                    self.priceChangeLabel.textColor = UIColor.systemGreen
+                } else {
+                    self.priceChangeLabel.text = String(format: "%.2f", item.priceChangePercentage!) + "%" + " | " + "$" + String(format: "%.2f", abs(item.priceChange!))
+                    self.priceChangeLabel.textColor = UIColor.systemRed
+                }
+                self.addToFavouritesButtonIsSelected = item.isFavourite
+                self.updateFavouritesButtonImage()
             }
         }
         model.loadChart(with: .day, completion: {
             DispatchQueue.main.async {
-                guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                guard let candles = self.model.companyItems.select(by: self.model.selectedTicker!)?.candles else { return }
                 assert(candles.price.count == candles.time.count)
                 for i in 0..<candles.price.count {
                     let x = Double(candles.time[i])
@@ -67,6 +77,7 @@ class DetailViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         model.selectedTicker = nil
+        model.selectedCompanyItem = nil
     }
     
     @IBAction func chartDidChange(_ sender: UISegmentedControl) {
@@ -74,7 +85,7 @@ class DetailViewController: UIViewController, ChartViewDelegate {
             self.model.loadChart(with: $0, completion: {
                 self.values.removeAll()
                 DispatchQueue.main.async {
-                    guard let candles = self.model.companyItems.selectBy(ticker: self.model.selectedTicker!)?.candles else { return }
+                    guard let candles = self.model.companyItems.select(by: self.model.selectedTicker!)?.candles else { return }
                     assert(candles.price.count == candles.time.count)
                     for i in 0..<candles.price.count {
                         let x = Double(candles.time[i])
@@ -107,41 +118,35 @@ class DetailViewController: UIViewController, ChartViewDelegate {
     
     @IBAction func addToFavouritesButtonDidTap(_ sender: UIButton) {
         addToFavouritesButtonIsSelected = !addToFavouritesButtonIsSelected
-        updateAddToFavouritesButton()
-    }
-    func updateAddToFavouritesButton() {
-        if addToFavouritesButtonIsSelected {
-            favouritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            
-        }
-        else {
-            favouritesButton.setImage(UIImage(systemName: "star"), for: .normal)
-        }
-        
-        let currentTicker = model.companyItems.selectBy(ticker: model.selectedTicker!)
-        if (currentTicker != nil) { model.favouriteTickers.append(currentTicker!) }
-        print(model.favouriteTickers[0].ticker)
+        let selectedStockIndex = model.companyItems.selectIndex(by: model.selectedTicker!)
+        model.companyItems[selectedStockIndex!].isFavourite = addToFavouritesButtonIsSelected
+        updateFavouritesButtonImage()
     }
     
+    func updateFavouritesButtonImage() {
+        addToFavouritesButtonIsSelected
+            ? favouritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            : favouritesButton.setImage(UIImage(systemName: "star"), for: .normal)
+    }
     
     func setData(_ data: [ChartDataEntry]?) {
-        let set1 = LineChartDataSet(entries: data)
-        set1.drawCirclesEnabled = false
-        set1.lineWidth = 2
+        let chartDataSet = LineChartDataSet(entries: data)
+        chartDataSet.drawCirclesEnabled = false
+        chartDataSet.lineWidth = 2
         if values.first!.y < values.last!.y {
-            set1.setColor(.systemGreen)
-            set1.fill = Fill(color: .systemGreen)
+            chartDataSet.setColor(.systemGreen)
+            chartDataSet.fill = Fill(color: .systemGreen)
         } else if values.first!.y > values.last!.y {
-            set1.setColor(.systemRed)
-            set1.fill = Fill(color: .systemRed)
+            chartDataSet.setColor(.systemRed)
+            chartDataSet.fill = Fill(color: .systemRed)
         } else {
-            set1.setColor(.systemGray)
-            set1.fill = Fill(color: .systemGray)
+            chartDataSet.setColor(.systemGray)
+            chartDataSet.fill = Fill(color: .systemGray)
         }
-        set1.fillAlpha = 0.2
-        set1.drawFilledEnabled = true
+        chartDataSet.fillAlpha = 0.2
+        chartDataSet.drawFilledEnabled = true
         
-        let data = LineChartData(dataSet: set1)
+        let data = LineChartData(dataSet: chartDataSet)
         data.setDrawValues(false)
         lineChartView.data = data
     }

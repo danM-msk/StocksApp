@@ -31,6 +31,9 @@ class MainViewController: UIViewController {
             }
         }
     }
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
     
     func setupTableView() {
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
@@ -71,26 +74,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
-        let selectedTicker = model.companyItems[indexPath!.row].ticker
-        model.selectedTicker = selectedTicker
+        if let selectedTicker = model.companyItems[indexPath!.row].ticker {
+            model.selectedTicker = selectedTicker
+        }
         performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFavoritesModeEnabled ? model.favouriteTickers.count : model.companyItems.count
+        return isFavoritesModeEnabled ? model.companyItems.favourites.count : model.companyItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier) as! StockCell
-        let item = isFavoritesModeEnabled ? model.favouriteTickers[indexPath.row] : model.companyItems[indexPath.row]
+        let item = isFavoritesModeEnabled ? model.companyItems.favourites[indexPath.row] : model.companyItems[indexPath.row]
         cell.companyName?.text = item.companyName
         cell.ticker?.text = item.ticker
         cell.price?.text = "$" + String(format: "%.2f", item.currentPrice!)
         if item.priceChange > 0 {
-            cell.priceChange?.text = "+" + String(format: "%.2f", item.priceChange!) + "%"
+            cell.priceChange?.text = "+" + String(format: "%.2f", item.priceChangePercentage!) + "%"
         } else {
-            cell.priceChange?.text = String(format: "%.2f", item.priceChange!) + "%"
+            cell.priceChange?.text = String(format: "%.2f", item.priceChangePercentage!) + "%"
         }
         cell.priceChange?.textColor = dynamicColorFor(item.priceChange!)
         return cell;

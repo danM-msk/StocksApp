@@ -73,8 +73,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
-        let selectedTicker = model.companyItems[indexPath!.row].ticker
-        model.selectedTicker = selectedTicker
+        if let selectedTicker = model.companyItems[indexPath!.row].ticker {
+            model.selectedTicker = selectedTicker
+        }
         performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
         
     }

@@ -305,7 +305,7 @@
                     <connections>
                         <outlet property="companyName" destination="lKs-b8-zvG" id="DaF-m9-t1u"/>
                         <outlet property="favouritesButton" destination="Efv-HT-QP0" id="ePf-HD-c3h"/>
-                        <outlet property="logo" destination="ZBa-XN-hEw" id="hcI-el-0HJ"/>
+                        <outlet property="logoImage" destination="ZBa-XN-hEw" id="hcI-el-0HJ"/>
                         <outlet property="priceChangeLabel" destination="YCI-b1-nno" id="ld5-PF-9aS"/>
                         <outlet property="priceLabel" destination="KIr-Wd-Xts" id="G0z-zf-vRd"/>
                     </connections>
