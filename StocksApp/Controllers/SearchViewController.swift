@@ -125,7 +125,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        model.selectedTicker = nil
+//        model.selectedTicker = nil
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
