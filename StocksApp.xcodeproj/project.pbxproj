@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3D09A9D5A8C14658E2C058F3 /* Pods_StocksApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4EFAA548C7E9E68B28EB8FB /* Pods_StocksApp.framework */; };
-		5C1F577A260F06E1004882A8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F5778260F06E0004882A8 /* DataModel.xcdatamodeld */; };
 		5C24500E2605E4FA00DDC91E /* FHStock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24500B2605E4FA00DDC91E /* FHStock.swift */; };
 		5C24500F2605E4FA00DDC91E /* FHCompanyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24500C2605E4FA00DDC91E /* FHCompanyInfo.swift */; };
 		5C2450102605E4FA00DDC91E /* FHQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24500D2605E4FA00DDC91E /* FHQuote.swift */; };
@@ -30,11 +29,13 @@
 		5CAEBA42260A693000280A11 /* FHStockCandles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA41260A693000280A11 /* FHStockCandles.swift */; };
 		5CAEBA4D260BBD8300280A11 /* FHResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAEBA4C260BBD8300280A11 /* FHResolution.swift */; };
 		5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCB0566260899D700B658E5 /* DetailViewController.swift */; };
+		5CF903042610B4D10066C686 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5CF903022610B4D10066C686 /* DataModel.xcdatamodeld */; };
+		5CF903352610BECE0066C686 /* StockItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF903342610BECE0066C686 /* StockItem+CoreDataClass.swift */; };
+		5CF903362610BECE0066C686 /* StockItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF903332610BECD0066C686 /* StockItem+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3BA08C0555C4C02C303A5353 /* Pods-StocksApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.debug.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.debug.xcconfig"; sourceTree = "<group>"; };
-		5C1F5779260F06E0004882A8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		5C24500B2605E4FA00DDC91E /* FHStock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHStock.swift; sourceTree = "<group>"; };
 		5C24500C2605E4FA00DDC91E /* FHCompanyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHCompanyInfo.swift; sourceTree = "<group>"; };
 		5C24500D2605E4FA00DDC91E /* FHQuote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FHQuote.swift; sourceTree = "<group>"; };
@@ -58,6 +59,9 @@
 		5CAEBA41260A693000280A11 /* FHStockCandles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHStockCandles.swift; sourceTree = "<group>"; };
 		5CAEBA4C260BBD8300280A11 /* FHResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHResolution.swift; sourceTree = "<group>"; };
 		5CCB0566260899D700B658E5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
+		5CF903032610B4D10066C686 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		5CF903332610BECD0066C686 /* StockItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StockItem+CoreDataProperties.swift"; path = "/Users/daniyarmamadov/Desktop/Development/StocksApp/StocksApp/Models/StockItem+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		5CF903342610BECE0066C686 /* StockItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StockItem+CoreDataClass.swift"; path = "/Users/daniyarmamadov/Desktop/Development/StocksApp/StocksApp/Models/StockItem+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		AD0E2097A3442F0476048AF5 /* Pods-StocksApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StocksApp.release.xcconfig"; path = "Target Support Files/Pods-StocksApp/Pods-StocksApp.release.xcconfig"; sourceTree = "<group>"; };
 		D4EFAA548C7E9E68B28EB8FB /* Pods_StocksApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StocksApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -138,13 +142,14 @@
 		5C4E784F25FCF3A500A62A04 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5CF903342610BECE0066C686 /* StockItem+CoreDataClass.swift */,
+				5CF903332610BECD0066C686 /* StockItem+CoreDataProperties.swift */,
 				5CA8978125FA9A5F001D5860 /* StockModel.swift */,
 				5C2F708025F82774007C613A /* FHProvider.swift */,
 				5CAEBA252608FC4000280A11 /* Provider.swift */,
 				5CAEBA3226090B6900280A11 /* StockItem.swift */,
 				5CA8978525FA9D7A001D5860 /* FinnHub Types */,
 				5C7A6E11260E76E8002F90E6 /* Alert.swift */,
-				5C1F5778260F06E0004882A8 /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				5C2F705C25F7F43A007C613A /* Main.storyboard */,
 				5C2F707625F7F80C007C613A /* StockCell.xib */,
 				5C2F707525F7F80C007C613A /* StockCell.swift */,
+				5CF903022610B4D10066C686 /* DataModel.xcdatamodeld */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CF903352610BECE0066C686 /* StockItem+CoreDataClass.swift in Sources */,
 				5CCB0567260899D700B658E5 /* DetailViewController.swift in Sources */,
 				5C2F705B25F7F43A007C613A /* MainViewController.swift in Sources */,
 				5CAEBA262608FC4000280A11 /* Provider.swift in Sources */,
@@ -296,12 +303,13 @@
 				5C2F707725F7F80C007C613A /* StockCell.swift in Sources */,
 				5C2450102605E4FA00DDC91E /* FHQuote.swift in Sources */,
 				5C24500E2605E4FA00DDC91E /* FHStock.swift in Sources */,
+				5CF903362610BECE0066C686 /* StockItem+CoreDataProperties.swift in Sources */,
 				5C2450192605F65300DDC91E /* SearchViewController.swift in Sources */,
 				5C2F705925F7F43A007C613A /* SceneDelegate.swift in Sources */,
 				5CAEBA42260A693000280A11 /* FHStockCandles.swift in Sources */,
 				5CAEBA3326090B6900280A11 /* StockItem.swift in Sources */,
 				5C24500F2605E4FA00DDC91E /* FHCompanyInfo.swift in Sources */,
-				5C1F577A260F06E1004882A8 /* DataModel.xcdatamodeld in Sources */,
+				5CF903042610B4D10066C686 /* DataModel.xcdatamodeld in Sources */,
 				5C2F707E25F7F8BB007C613A /* Constants.swift in Sources */,
 				5C2F708125F82774007C613A /* FHProvider.swift in Sources */,
 			);
@@ -509,12 +517,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		5C1F5778260F06E0004882A8 /* DataModel.xcdatamodeld */ = {
+		5CF903022610B4D10066C686 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				5C1F5779260F06E0004882A8 /* DataModel.xcdatamodel */,
+				5CF903032610B4D10066C686 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 5C1F5779260F06E0004882A8 /* DataModel.xcdatamodel */;
+			currentVersion = 5CF903032610B4D10066C686 /* DataModel.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
