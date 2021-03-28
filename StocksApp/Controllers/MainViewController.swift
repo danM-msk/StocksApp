@@ -74,8 +74,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
-        if let selectedTicker = model.companyItems[indexPath!.row].ticker {
-            model.selectedTicker = selectedTicker
+        if isFavoritesModeEnabled == false {
+            if let selectedTicker = model.companyItems[indexPath!.row].ticker {
+                model.selectedTicker = selectedTicker
+            }
+        } else {
+            if let selectedTicker = model.companyItems.favourites[indexPath!.row].ticker {
+                model.selectedTicker = selectedTicker
+            }
         }
         performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
     }
