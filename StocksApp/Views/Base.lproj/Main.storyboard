@@ -164,7 +164,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="0aX-Jb-eNt" kind="show" identifier="goToDetailFromTrending" id="ysO-7Z-uNC"/>
+                                            <segue destination="0aX-Jb-eNt" kind="show" identifier="goToDetailFromSearch" id="ysO-7Z-uNC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -329,7 +329,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fwN-lq-Qic"/>
+        <segue reference="ysO-7Z-uNC"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>

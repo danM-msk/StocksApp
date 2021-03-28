@@ -18,12 +18,14 @@ class StockModel {
     var selectedTicker: String?
     weak var selectedCompanyItem: StockItem?
     
-    func loadCompanyInfoAndPrice(with completion: @escaping () -> Void) {
-        provider.fetchCompanyInfoAndPrice(by: selectedTicker!) { (loadedStockItem, error) in
-                // do error process to details view controller (alert)
-                // return
+    func loadCompanyInfoAndPrice(with completion: @escaping (Error?) -> Void) {
+        provider.fetchCompanyInfoAndPrice(by: selectedTicker!) { loadedStockItem, error in
+            if error != nil {
+                completion(error)
+                return
+            }
             
-            self.selectedCompanyItem = self.companyItems.select(by: self.selectedTicker!)
+            self.selectedCompanyItem = loadedStockItem!
             
             self.selectedCompanyItem?.ticker = loadedStockItem!.ticker
             self.selectedCompanyItem?.companyName = loadedStockItem!.companyName
@@ -31,7 +33,7 @@ class StockModel {
             self.selectedCompanyItem?.priceChange = loadedStockItem!.priceChange
             self.selectedCompanyItem?.candles = loadedStockItem!.candles
             
-            completion()
+            completion(nil)
         }
     }
     
@@ -56,7 +58,7 @@ class StockModel {
         dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
             if allDataHasBeenLoaded == true {
                 debugPrint("all data has been loaded")
-                self.companyItems = self.companyItems.sorted(by: { $0.companyName < $1.companyName })
+                self.companyItems = self.companyItems.sorted(by: { $0.ticker < $1.ticker })
                 completion(nil)
             } else {
                 print(fetchingError?.localizedDescription ?? "error while fetching companies and prices")
@@ -73,6 +75,7 @@ class StockModel {
                 return
             }
             self.availableCompanies = stocks
+            self.availableCompanies = self.availableCompanies.sorted(by: { $0.ticker! < $1.ticker! })
             completion(nil)
         }
     }

@@ -73,12 +73,9 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let indexPath = tableView.indexPathForSelectedRow
-        if let selectedTicker = model.availableCompanies[indexPath!.row].ticker {
+        if let selectedTicker = model.availableCompanies[indexPath.row].ticker {
             model.selectedTicker = selectedTicker
         }
-        performSegue(withIdentifier: K.toDetailSegueID, sender: self)
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,7 +124,7 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 //        model.selectedTicker = nil
         navigationController?.popViewController(animated: true)
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
     }
     
     

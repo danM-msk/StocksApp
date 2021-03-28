@@ -41,13 +41,16 @@ class DetailViewController: UIViewController, ChartViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        model.loadCompanyInfoAndPrice {
+        super.viewWillAppear(animated)
+        model.loadCompanyInfoAndPrice { error in
+            if error != nil {
+                self.showAlert(with: "Reason", message: error!.localizedDescription)
+                return
+            }
             guard let item = self.model.selectedCompanyItem else { return }
             DispatchQueue.main.async {
+                self.navigationItem.title = item.companyName
                 self.companyName.text = item.companyName
-//                let logo : UIImage = UIImage(named: item.logoUrl!)!
-//                self.logoImage = UIImageView(image: logo)
-//                self.load(item.logoUrl)
                 self.priceLabel.text = "$\(Double(item.currentPrice))"
                 if item.priceChange > 0 {
                     self.priceChangeLabel.text = "+" + String(format: "%.2f", item.priceChangePercentage!) + "%" + "|" + "$" + String(format: "%.2f", abs(item.priceChange!))
