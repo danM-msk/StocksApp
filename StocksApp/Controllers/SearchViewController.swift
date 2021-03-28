@@ -23,6 +23,7 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
         super.viewDidLoad()
         setupTableView()
         setupSearchBar()
+        model.availableCompanies.removeAll()
         model.fetchSupportedStocks { error in
             if error != nil {
                 self.showAlert(with: "Reason", message: error!.localizedDescription)
@@ -73,10 +74,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
-        if let selectedTicker = model.companyItems[indexPath!.row].ticker {
+        if let selectedTicker = model.availableCompanies[indexPath!.row].ticker {
             model.selectedTicker = selectedTicker
         }
-        performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
+        performSegue(withIdentifier: K.toDetailSegueID, sender: self)
         
     }
     

@@ -83,7 +83,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 model.selectedTicker = selectedTicker
             }
         }
-        performSegue(withIdentifier: K.fromTrendingSegueID, sender: self)
+        performSegue(withIdentifier: K.toDetailSegueID, sender: self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
