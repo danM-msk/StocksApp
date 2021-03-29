@@ -42,7 +42,7 @@ class StockItem {
         self.logoUrl = company.logoUrl
         self.phone = company.phone
         self.weburl = company.weburl
-        self.finnhubindustry = company.finnhubindustry
+        self.finnhubindustry = company.finnhubIndustry
     }
     
     func updatePrices(_ quote: FHQuote) {

@@ -19,7 +19,7 @@ struct FHCompanyInfo : Codable {
     var logoUrl: String?
     var phone: String?
     var weburl: String?
-    var finnhubindustry: String?
+    var finnhubIndustry: String?
     
     enum CodingKeys: String, CodingKey {
         case country
@@ -33,6 +33,6 @@ struct FHCompanyInfo : Codable {
         case logoUrl = "logo"
         case phone
         case weburl
-        case finnhubindustry
+        case finnhubIndustry
     }
 }

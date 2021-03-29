@@ -27,7 +27,7 @@ class DetailViewController: UIViewController {
     func setupLineChartView() {
         let lineChartView = chartController.lineChartView
         view.addSubview(lineChartView)
-        lineChartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width)
+        lineChartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 20, height: self.view.frame.width)
         lineChartView.center = view.center
     }
     
@@ -68,8 +68,8 @@ class DetailViewController: UIViewController {
         DispatchQueue.main.async {
             self.logoImage.load(urlString: item.logoUrl!)
             self.companyName.text = item.companyName
-            self.marketCapLabel.text = "$" + String(format: "%.2f", item.marketCapitalization!)
-            self.industryLabel.text = String(item.finnhubindustry!)
+            self.marketCapLabel.text = "$" + String(format: "%.2f", item.marketCapitalization!*1000)
+            self.industryLabel.text = String(item.finnhubindustry ?? String("no data"))
             self.priceLabel.text = "$\(Double(item.currentPrice))"
             if item.priceChange > 0 {
                 self.priceChangeLabel.text = "+" + String(format: "%.2f", item.priceChangePercentage!) + "%" + "|" + "$" + String(format: "%.2f", abs(item.priceChange!))
