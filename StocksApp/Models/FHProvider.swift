@@ -54,14 +54,12 @@ class FHProvider: Provider {
         dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
             debugPrint("company info and price has been loaded")
             if let companyInfo = companyInfo, let quote = quote {
-                let item = StockItem(companyInfo, quote: quote)
+                let item = StockItem(ticker, company: companyInfo, quote: quote)
                 completion(item, nil)
             } else {
-                completion(nil, fetchingError)
+                completion(nil, fetchingError ?? APIError.incorrectData)
             }
-            
         }
-        
     }
     
     func fetchCompanyProfile(by ticker: String, completion: @escaping (FHCompanyInfo?, Error?) -> Void) {

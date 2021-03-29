@@ -8,150 +8,138 @@
 import UIKit
 import Charts
 
-class DetailViewController: UIViewController, ChartViewDelegate {
+class DetailViewController: UIViewController {
     
     @IBOutlet weak var companyName: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceChangeLabel: UILabel!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var favouritesButton: UIButton!
-    
-    var addToFavouritesButtonIsSelected = false
+    @IBOutlet weak var marketCapLabel: UILabel!
+    @IBOutlet weak var industryLabel: UILabel!
     
     let model = StockModel.instance
-    var values = [ChartDataEntry]()
+    let chartController = ChartDelegate()
+    var loadedStockItem: StockItem?
+    var addToFavouritesButtonIsSelected = false
+    var completionHandler: (() -> Void)?
     
-    lazy var lineChartView: LineChartView = {
-        let chartView = LineChartView()
-        chartView.leftAxis.enabled = false
-        chartView.xAxis.enabled = false
-        let priceAxis = chartView.rightAxis
-        priceAxis.drawAxisLineEnabled = false
-        let timeAxis = chartView.xAxis
-        chartView.legend.enabled = false
-        priceAxis.gridLineDashLengths = [2, 8]
-        return chartView
-    } ()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func setupLineChartView() {
+        let lineChartView = chartController.lineChartView
         view.addSubview(lineChartView)
         lineChartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width)
         lineChartView.center = view.center
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLineChartView()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        model.loadCompanyInfoAndPrice { error in
+        model.loadDetails { stockItem, error in
             if error != nil {
-                self.showAlert(with: "Reason", message: error!.localizedDescription)
+                self.showAlert(with: "Data loading error", message: error!.localizedDescription)
                 return
             }
-            guard let item = self.model.selectedCompanyItem else { return }
-            DispatchQueue.main.async {
-                self.navigationItem.title = item.companyName
-                self.companyName.text = item.companyName
-                self.priceLabel.text = "$\(Double(item.currentPrice))"
-                if item.priceChange > 0 {
-                    self.priceChangeLabel.text = "+" + String(format: "%.2f", item.priceChangePercentage!) + "%" + "|" + "$" + String(format: "%.2f", abs(item.priceChange!))
-                    self.priceChangeLabel.textColor = UIColor.systemGreen
-                } else {
-                    self.priceChangeLabel.text = String(format: "%.2f", item.priceChangePercentage!) + "%" + " | " + "$" + String(format: "%.2f", abs(item.priceChange!))
-                    self.priceChangeLabel.textColor = UIColor.systemRed
-                }
-                self.addToFavouritesButtonIsSelected = item.isFavourite
-                self.updateFavouritesButtonImage()
+            guard let stockItem = stockItem, stockItem.ticker != nil else {
+                self.showAlert(with: "Data error", message: "Incorrect API response")
+                return
+            }
+            if let existingItem = self.model.companyItems.select(by: stockItem.ticker) {
+                existingItem.updateDetails(from: stockItem)
+                self.updateUI(existingItem)
+            } else {
+                self.updateUI(stockItem)
             }
         }
-        model.loadChart(with: .day, completion: {
-            DispatchQueue.main.async {
-                guard let candles = self.model.companyItems.select(by: self.model.selectedTicker!)?.candles else { return }
-                assert(candles.price.count == candles.time.count)
-                for i in 0..<candles.price.count {
-                    let x = Double(candles.time[i])
-                    let y = candles.price[i]
-                    self.values.append(ChartDataEntry(x: x, y: y))
-                }
-                self.setData(self.values)
-                self.lineChartView.notifyDataSetChanged()
-            }
-        })
+        chartController.loadData(with: .day)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         model.selectedTicker = nil
-        model.selectedCompanyItem = nil
+        if completionHandler != nil { completionHandler!() }
     }
     
-    @IBAction func chartDidChange(_ sender: UISegmentedControl) {
-        let loadChartCompletion: (_ resolution: FHResolution) -> () = {
-            self.model.loadChart(with: $0, completion: {
-                self.values.removeAll()
-                DispatchQueue.main.async {
-                    guard let candles = self.model.companyItems.select(by: self.model.selectedTicker!)?.candles else { return }
-                    assert(candles.price.count == candles.time.count)
-                    for i in 0..<candles.price.count {
-                        let x = Double(candles.time[i])
-                        let y = candles.price[i]
-                        self.values.append(ChartDataEntry(x: x, y: y))
-                    }
-                    self.setData(self.values)
-                    self.lineChartView.notifyDataSetChanged()
-                }
-            })
+    func updateUI(_ item: StockItem) {
+        loadedStockItem = item
+        DispatchQueue.main.async {
+            self.logoImage.load(urlString: item.logoUrl!)
+            self.companyName.text = item.companyName
+            self.marketCapLabel.text = "$" + String(format: "%.2f", item.marketCapitalization!)
+            self.industryLabel.text = String(item.finnhubindustry!)
+            self.priceLabel.text = "$\(Double(item.currentPrice))"
+            if item.priceChange > 0 {
+                self.priceChangeLabel.text = "+" + String(format: "%.2f", item.priceChangePercentage!) + "%" + "|" + "$" + String(format: "%.2f", abs(item.priceChange!))
+                self.priceChangeLabel.textColor = UIColor.systemGreen
+            } else {
+                self.priceChangeLabel.text = String(format: "%.2f", item.priceChangePercentage!) + "%" + " | " + "$" + String(format: "%.2f", abs(item.priceChange!))
+                self.priceChangeLabel.textColor = UIColor.systemRed
+            }
+            self.addToFavouritesButtonIsSelected = item.isFavourite
+            self.reloadFavouritesButtonImage()
         }
-        
+    }
+    
+    @IBAction func chartSegmentDidChange(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            loadChartCompletion(.day)
+            chartController.loadData(with: .day)
         case 1:
-            loadChartCompletion(.week)
+            chartController.loadData(with: .week)
         case 2:
-            loadChartCompletion(.month)
-
+            chartController.loadData(with: .month)
         default:
-            loadChartCompletion(.day)
-
+            chartController.loadData(with: .day)
         }
     }
     
-    @IBAction func GoBack(_ sender: UIButton) {
+    @IBAction func backButtonDidTap(_ sender: UIButton) {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func addToFavouritesButtonDidTap(_ sender: UIButton) {
+    @IBAction func favouritesButtonDidTap(_ sender: UIButton) {
         addToFavouritesButtonIsSelected = !addToFavouritesButtonIsSelected
-        let selectedStockIndex = model.companyItems.selectIndex(by: model.selectedTicker!)
-        model.companyItems[selectedStockIndex!].isFavourite = addToFavouritesButtonIsSelected
-        updateFavouritesButtonImage()
+        reloadFavouritesButtonImage()
+        
+        if let existingItem = model.companyItems.select(by: model.selectedTicker!) {
+            existingItem.isFavourite = addToFavouritesButtonIsSelected
+        } else if addToFavouritesButtonIsSelected == true && loadedStockItem != nil {
+            loadedStockItem!.isFavourite = addToFavouritesButtonIsSelected
+            model.companyItems.append(loadedStockItem!)
+            model.defaultTickers.append(loadedStockItem!.ticker)
+        }
     }
     
-    func updateFavouritesButtonImage() {
+    func reloadFavouritesButtonImage() {
         addToFavouritesButtonIsSelected
             ? favouritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             : favouritesButton.setImage(UIImage(systemName: "star"), for: .normal)
     }
-    
-    func setData(_ data: [ChartDataEntry]?) {
-        let chartDataSet = LineChartDataSet(entries: data)
-        chartDataSet.drawCirclesEnabled = false
-        chartDataSet.lineWidth = 2
-        if values.first!.y < values.last!.y {
-            chartDataSet.setColor(.systemGreen)
-            chartDataSet.fill = Fill(color: .systemGreen)
-        } else if values.first!.y > values.last!.y {
-            chartDataSet.setColor(.systemRed)
-            chartDataSet.fill = Fill(color: .systemRed)
-        } else {
-            chartDataSet.setColor(.systemGray)
-            chartDataSet.fill = Fill(color: .systemGray)
-        }
-        chartDataSet.fillAlpha = 0.2
-        chartDataSet.drawFilledEnabled = true
-        
-        let data = LineChartData(dataSet: chartDataSet)
-        data.setDrawValues(false)
-        lineChartView.data = data
-    }
 }
 
+var imageCache = NSCache<AnyObject, AnyObject>()
+
+extension UIImageView {
+    func load(urlString: String) {
+        
+        if let image = imageCache.object(forKey: urlString as NSString) as? UIImage {
+            self.image = image
+            return
+        }
+        
+        guard let url = URL(string: urlString) else { return }
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        imageCache.setObject(image, forKey: urlString as NSString)
+                        self?.image = image
+                    }
+                }
+            }
+        }
+}
+}

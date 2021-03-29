@@ -27,10 +27,10 @@ class StockItem {
     var weburl: String?
     var finnhubindustry: String?
     
-    init(_ company: FHCompanyInfo, quote: FHQuote) {
+    init(_ ticker: String, company: FHCompanyInfo, quote: FHQuote) {
+        self.ticker = ticker
         self.companyName = company.name
         self.currentPrice = quote.currentPrice
-        self.ticker = company.ticker
         self.priceChange = quote.currentPrice - quote.openPrice
         self.priceChangePercentage = (self.priceChange/quote.openPrice)*100
         self.country = company.country
@@ -52,7 +52,23 @@ class StockItem {
     
     func updateCompanyInfo(_ company: FHCompanyInfo) {
         self.companyName = company.name
-        self.ticker = company.ticker
+    }
+    
+    func updateDetails(from anotherItem: StockItem) {
+        self.companyName = anotherItem.companyName
+        self.currentPrice = anotherItem.currentPrice
+        self.priceChange = anotherItem.priceChange
+        self.priceChangePercentage = anotherItem.priceChangePercentage
+        self.country = anotherItem.country
+        self.currency = anotherItem.currency
+        self.exchange = anotherItem.exchange
+        self.ipo = anotherItem.ipo
+        self.marketCapitalization = anotherItem.marketCapitalization
+        self.shareOutstanding = anotherItem.shareOutstanding
+        self.logoUrl = anotherItem.logoUrl
+        self.phone = anotherItem.phone
+        self.weburl = anotherItem.weburl
+        self.finnhubindustry = anotherItem.finnhubindustry
     }
 }
 
@@ -60,15 +76,6 @@ extension Array where Element == StockItem {
     func select(by ticker: String) -> StockItem? {
         for item in self {
             if item.ticker == ticker { return item }
-        }
-        return nil
-    }
-    
-    func selectIndex(by ticker: String) -> Int? {
-        var i = 0
-        for item in self {
-            if item.ticker == ticker { return i }
-            i += 1
         }
         return nil
     }

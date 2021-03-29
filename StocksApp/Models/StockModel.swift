@@ -9,40 +9,25 @@ import Foundation
 
 class StockModel {
     static let instance = StockModel()
-    static let detailVC = DetailViewController()
     private let provider = FHProvider.instance
-    private let trendingTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA", "BAC", "F", "JPM", "AAL", "CSCO", "GE", "XOM", "LOGI"]
-//    private let trendingTickers = ["AAPL"]
+    var defaultTickers = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN", "MA", "BAC", "F", "JPM", "AAL", "CSCO", "GE", "XOM", "LOGI"]
     var companyItems = [StockItem]()
     var availableCompanies = [FHStock]()
     var selectedTicker: String?
-    weak var selectedCompanyItem: StockItem?
     
-    func loadCompanyInfoAndPrice(with completion: @escaping (Error?) -> Void) {
+    func loadDetails(with completion: @escaping (StockItem?, Error?) -> Void) {
         provider.fetchCompanyInfoAndPrice(by: selectedTicker!) { loadedStockItem, error in
-            if error != nil {
-                completion(error)
-                return
-            }
-            
-            self.selectedCompanyItem = loadedStockItem!
-            
-            self.selectedCompanyItem?.ticker = loadedStockItem!.ticker
-            self.selectedCompanyItem?.companyName = loadedStockItem!.companyName
-            self.selectedCompanyItem?.currentPrice = loadedStockItem!.currentPrice
-            self.selectedCompanyItem?.priceChange = loadedStockItem!.priceChange
-            self.selectedCompanyItem?.candles = loadedStockItem!.candles
-            
-            completion(nil)
+            completion(loadedStockItem, error)
         }
     }
     
-    func loadCompaniesInfoAndPrice(with completion: @escaping (Error?) -> Void) {
+    func loadStocks(with completion: @escaping (Error?) -> Void) {
         let dispatchGroup = DispatchGroup()
         var allDataHasBeenLoaded = true
         var fetchingError: Error?
+        companyItems.removeAll()
         
-        for ticker in trendingTickers {
+        for ticker in defaultTickers {
             dispatchGroup.enter()
             provider.fetchCompanyInfoAndPrice(by: ticker) { (loadedStockItem, error) in
                 dispatchGroup.leave()
@@ -61,16 +46,18 @@ class StockModel {
                 self.companyItems = self.companyItems.sorted(by: { $0.ticker < $1.ticker })
                 completion(nil)
             } else {
-                print(fetchingError?.localizedDescription ?? "error while fetching companies and prices")
+                let incorrectDataError = APIError.incorrectData
+                print(fetchingError?.localizedDescription ?? incorrectDataError.localizedDescription)
                 self.companyItems.removeAll()
-                completion(fetchingError)
+                completion(fetchingError ?? incorrectDataError)
             }
         }
     }
     
-    func fetchSupportedStocks(with completion: @escaping (Error?) -> Void) {
-        provider.fetchSupportedStocks { stocks, error in
-            guard let stocks = stocks else {
+    func loadSupportedStocks(with completion: @escaping (Error?) -> Void) {
+        availableCompanies.removeAll()
+        provider.fetchSupportedStocks { loadedStocks, error in
+            guard let stocks = loadedStocks else {
                 completion(error)
                 return
             }

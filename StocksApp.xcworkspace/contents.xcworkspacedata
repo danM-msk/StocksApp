@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/daniyarmamadov/Desktop/Development/StocksApp/StocksApp/Models/StockItem+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/daniyarmamadov/Desktop/Development/StocksApp/StocksApp/Models/StockItem+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
       location = "group:StocksApp.xcodeproj">
    </FileRef>
    <FileRef

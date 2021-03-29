@@ -9,32 +9,34 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
-    let model = StockModel.instance
+    
     let searchController = UISearchController(searchResultsController: nil)
     var filteredCompanies: [FHStock] = []
-    var isSearchBarEmpty: Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    var isFiltering: Bool {
-        return searchController.isActive && !isSearchBarEmpty
-    }
+    let model = StockModel.instance
+    var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
+    var isFiltering: Bool { return searchController.isActive && !isSearchBarEmpty }
+    var completionHandler: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupSearchBar()
-        model.availableCompanies.removeAll()
-        model.fetchSupportedStocks { error in
+        model.loadSupportedStocks { error in
             if error != nil {
-                self.showAlert(with: "Reason", message: error!.localizedDescription)
+                self.showAlert(with: "Data loading error", message: error!.localizedDescription)
                 return
             }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.updateSearchResults(for: self.searchController)
             }
         }
-        filterContentForSearchText(searchController.searchBar.text ?? "Search all US stocks")
-        updateSearchResults(for: searchController)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.searchController.isActive = true
+        self.searchController.searchBar.becomeFirstResponder()
     }
     
     private func setupTableView() {
@@ -53,36 +55,29 @@ class SearchViewController: UIViewController, UISearchControllerDelegate {
         definesPresentationContext = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.searchController.isActive = true
-        self.searchController.searchBar.becomeFirstResponder()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if completionHandler != nil { completionHandler!() }
     }
-    
-    func filterContentForSearchText(_ searchText: String) {
-        filteredCompanies = model.availableCompanies.filter { (type: FHStock) -> Bool in
-            return type.title!.lowercased().contains(searchText.lowercased())
-                || type.ticker!.lowercased().contains(searchText.lowercased())
-        }
-        
-        tableView.reloadData()
-    }
-    
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectedTicker = model.availableCompanies[indexPath.row].ticker {
+        let tickerFromSelectedCell = isFiltering
+            ? filteredCompanies[indexPath.row].ticker
+            : model.availableCompanies[indexPath.row].ticker
+        if let selectedTicker =  tickerFromSelectedCell {
             model.selectedTicker = selectedTicker
         }
+        self.searchController.isActive = false
+        dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredCompanies.count
         }
-        
         return model.availableCompanies.count
     }
     
@@ -100,8 +95,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
 extension SearchViewController: UISearchResultsUpdating {
+    private func filterContentForSearchText(_ searchText: String) {
+        filteredCompanies = model.availableCompanies.filter { (type: FHStock) -> Bool in
+            return type.title!.lowercased().contains(searchText.lowercased())
+                || type.ticker!.lowercased().contains(searchText.lowercased())
+        }
+        tableView.reloadData()
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
@@ -122,10 +124,6 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        model.selectedTicker = nil
-        navigationController?.popViewController(animated: true)
-//        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
-    
-    
 }

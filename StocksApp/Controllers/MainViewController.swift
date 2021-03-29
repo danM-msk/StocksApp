@@ -12,33 +12,30 @@ class MainViewController: UIViewController {
     @IBOutlet weak var favouritesButton: UIButton!
     @IBOutlet weak var trendingButton: UIButton!
     @IBOutlet weak var navigationBarView: UIView!
+    
     let model = StockModel.instance
     var isFavoritesModeEnabled = false
+    let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupHeader()
+        setupTableView()
+        refresh(sender: self)
+    }
+    
+    private func setupHeader() {
         navigationBarView.layer.cornerRadius = 10
         trendingButton.layer.cornerRadius = 16
         favouritesButton.layer.cornerRadius = 16
-        
-        setupTableView()
-        model.loadCompaniesInfoAndPrice {error in
-            if error != nil {
-                self.showAlert(with: "Reason", message: error!.localizedDescription)
-                return
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        self.tableView.reloadData()
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     private func dynamicColorFor(_ price: Double) -> UIColor {
@@ -48,6 +45,38 @@ class MainViewController: UIViewController {
             return .systemRed
         } else {
             return .systemGray
+        }
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        DispatchQueue.main.async { self.refreshControl.beginRefreshing() }
+        model.loadStocks { error in
+            if error != nil {
+                self.showAlert(with: "Data loading error", message: error!.localizedDescription)
+                DispatchQueue.main.async { self.refreshControl.endRefreshing() }
+                return
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == K.toDetailFromMain {
+            let vc = segue.destination as! DetailViewController
+            vc.completionHandler = {
+                self.model.companyItems = self.model.companyItems.sorted(by: { $0.ticker! < $1.ticker! })
+                self.tableView.reloadData() }
+        } else if segue.identifier == K.toSearchFromMain {
+            let vc = segue.destination as! SearchViewController
+            vc.completionHandler = {
+                if self.model.selectedTicker != nil {
+                    self.performSegue(withIdentifier: K.toDetailFromMain, sender: self)
+                }
+            }
+            
         }
     }
     
@@ -82,7 +111,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 model.selectedTicker = selectedTicker
             }
         }
-        performSegue(withIdentifier: K.toDetailFromTrendingSegueID, sender: self)
+        performSegue(withIdentifier: K.toDetailFromMain, sender: self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,6 +130,28 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.priceChange?.text = String(format: "%.2f", item.priceChangePercentage!) + "%"
         }
         cell.priceChange?.textColor = dynamicColorFor(item.priceChange!)
-        return cell;
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if isFavoritesModeEnabled {
+                let tickerToDelete = model.companyItems.favourites[indexPath.row].ticker!
+                let defaultTickersIndex = model.defaultTickers.firstIndex(of: tickerToDelete)!
+                model.defaultTickers.remove(at: defaultTickersIndex)
+                let companyItemsIndex = model.companyItems.firstIndex { $0.ticker == tickerToDelete }!
+                model.companyItems.remove(at: companyItemsIndex)
+            } else {
+                let tickerToDelete = model.companyItems[indexPath.row].ticker!
+                let index = model.defaultTickers.firstIndex(of: tickerToDelete)!
+                model.defaultTickers.remove(at: index)
+                model.companyItems.remove(at: indexPath.row)
+            }
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }

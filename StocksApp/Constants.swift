@@ -10,7 +10,6 @@ struct K {
     static let cellIdentifier = "ReusableCell"
     static let cellNibName = "StockCell"
     static let searchedStockCell = "SearchedStockCell"
-    static let toDetailFromTrendingSegueID = "goToDetailFromTrending"
-    static let toDetailFromSearch = "goToDetailFromSearch"
-    
+    static let toDetailFromMain = "toDetailFromMain"
+    static let toSearchFromMain = "toSearchFromMain"
 }
