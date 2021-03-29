@@ -49,7 +49,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func refresh(sender:AnyObject) {
-        DispatchQueue.main.async { self.refreshControl.beginRefreshing() }
+        self.refreshControl.beginRefreshing()
         model.loadStocks { error in
             if error != nil {
                 self.showAlert(with: "Data loading error", message: error!.localizedDescription)

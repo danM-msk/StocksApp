@@ -25,18 +25,22 @@ class StockModel {
         let dispatchGroup = DispatchGroup()
         var allDataHasBeenLoaded = true
         var fetchingError: Error?
-        companyItems.removeAll()
         
         for ticker in defaultTickers {
             dispatchGroup.enter()
             provider.fetchCompanyInfoAndPrice(by: ticker) { (loadedStockItem, error) in
                 dispatchGroup.leave()
                 guard let loadedStockItem = loadedStockItem else {
+                    
                     fetchingError = error
                     allDataHasBeenLoaded = false
                     return
                 }
-                self.companyItems.append(loadedStockItem)
+                if let existingStockItem = self.companyItems.select(by: ticker) {
+                    existingStockItem.updateDetails(from: loadedStockItem)
+                } else {
+                    self.companyItems.append(loadedStockItem)
+                }
             }
         }
         
@@ -48,7 +52,6 @@ class StockModel {
             } else {
                 let incorrectDataError = APIError.incorrectData
                 print(fetchingError?.localizedDescription ?? incorrectDataError.localizedDescription)
-                self.companyItems.removeAll()
                 completion(fetchingError ?? incorrectDataError)
             }
         }
